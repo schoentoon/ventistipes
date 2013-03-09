@@ -61,13 +61,10 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
       }
     } else if (email->ehlo) {
       if (startsWith(line, "MAIL FROM:<")) {
-        email->from = malloc(strlen (line)+1);
-        strcpy(email->from, line);
+        email_set_sender(email, line);
         bufferevent_write(bev, _250_OK, strlen(_250_OK));
       } else if (startsWith(line, "RCPT TO:<")) {
-        char* copy = malloc(strlen(line+1));
-        strcpy(copy, line);
-        add_recipient(email, copy);
+        email_add_recipient(email, line);
         bufferevent_write(bev, _250_OK, strlen(_250_OK));
       }
     }
