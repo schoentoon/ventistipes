@@ -9,6 +9,7 @@ struct email* new_email()
 {
   struct email* email = malloc(sizeof(struct email));
   email->ehlo = 0;
+  email->mode = HEADERS;
   return email;
 }
 
@@ -24,18 +25,43 @@ void delete_email(struct email* email)
   }
 }
 
-void email_set_sender(struct email* email, char* from)
+int email_set_sender(struct email* email, char* from)
 {
+  if (email->mode != HEADERS)
+    return 0;
   email->from = stripOutEmailAddress(from);
+  return 1;
 }
 
 int email_add_recipient(struct email* email, char* to)
 {
+  if (email->mode != HEADERS)
+    return 0;
   for (int i = 0; i < MAX_RECIPIENTS; i++) {
     if (email->to[i] == NULL) {
       email->to[i] = stripOutEmailAddress(to);
       return 1;
     }
+  }
+  return 0;
+}
+
+int email_has_recipients(struct email* email)
+{
+  return (email->from && email->to[0]) ? 1 : 0;
+}
+
+int email_append_data(struct email* email, char* data)
+{
+  if (email->mode != DATA)
+    return 0;
+  if (email->data) {
+    char buf[strlen(email->data)+strlen(data)+1];
+    snprintf(buf, sizeof(buf),"%s\n%s", email->data, data);
+    email->data = &buf;
+  } else {
+    email->data = malloc(strlen(data+1));
+    strcpy(email->data, data);
   }
   return 0;
 }
@@ -47,7 +73,7 @@ int email_add_recipient(struct email* email, char* to)
 void print_emails(struct email* email)
 {
   printf("From: %s\n", email->from);
-  printf("To ");
+  printf("To: ");
   if (!email->to[0])
     printf("nobody.\n");
   else {
@@ -61,5 +87,10 @@ void print_emails(struct email* email)
     }
     printf("\n");
   }
+  printf("Data: ");
+  if (email->data)
+    printf("%s\n", email->data);
+  else
+    printf("NULL\n");
 }
 #endif

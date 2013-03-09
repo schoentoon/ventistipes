@@ -44,8 +44,9 @@ void closeMailListener()
 /** All the internal smtp stuff is below here, hidden from the outside world really.
  */
 
-static char* _220_HELLO = "220 Hello\n";
-static char* _250_OK    = "250 Ok\n";
+static char* _220_HELLO    = "220 Hello\n";
+static char* _250_OK       = "250 Ok\n";
+static char* _354_GO_AHEAD = "354 Go ahead\n";
 
 static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
 {
@@ -54,19 +55,29 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
   size_t len;
   char* line = evbuffer_readln(buffer, &len, EVBUFFER_EOL_CRLF);
   if (line) {
-    if (len >= 4 && !email->ehlo) { /* Could be an EHLO or HELO */
-      if (startsWith(line, "EHLO") || startsWith(line, "HELO")) {
-        email->ehlo = 1;
-        bufferevent_write(bev, _250_OK, strlen(_250_OK));
+    switch (email->mode) {
+    case HEADERS:
+      if (len >= 4 && !email->ehlo) { /* Could be an EHLO or HELO */
+        if (string_startsWith(line, "EHLO") || string_startsWith(line, "HELO")) {
+          email->ehlo = 1;
+          bufferevent_write(bev, _250_OK, strlen(_250_OK));
+        }
+      } else if (email->ehlo) {
+        if (string_startsWith(line, "MAIL FROM:<")) {
+          email_set_sender(email, line);
+          bufferevent_write(bev, _250_OK, strlen(_250_OK));
+        } else if (string_startsWith(line, "RCPT TO:<")) {
+          email_add_recipient(email, line);
+          bufferevent_write(bev, _250_OK, strlen(_250_OK));
+        } else if (email_has_recipients(email) && string_equals(line, "DATA")) {
+          bufferevent_write(bev, _354_GO_AHEAD, strlen(_354_GO_AHEAD));
+          email->mode = DATA;
+        }
       }
-    } else if (email->ehlo) {
-      if (startsWith(line, "MAIL FROM:<")) {
-        email_set_sender(email, line);
-        bufferevent_write(bev, _250_OK, strlen(_250_OK));
-      } else if (startsWith(line, "RCPT TO:<")) {
-        email_add_recipient(email, line);
-        bufferevent_write(bev, _250_OK, strlen(_250_OK));
-      }
+      break;
+    case DATA:
+      email_append_data(email, line);
+      break;
     }
     printf("I got the following line: %s\n", line);
     free(line);

@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-int startsWith(char* line, char* start)
+int string_startsWith(char* line, char* start)
 {
   int line_len = strlen(line);
   int start_len = strlen(start);
@@ -12,6 +12,11 @@ int startsWith(char* line, char* start)
       return 0;
   }
   return 1;
+}
+
+int string_equals(char* str1, char* str2)
+{
+  return (strcmp(str1, str2) == 0) ? 1 : 0;
 }
 
 char* stripOutEmailAddress(char* line)

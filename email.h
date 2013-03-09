@@ -7,6 +7,11 @@ struct email {
   int ehlo;
   char* from;
   char* to[MAX_RECIPIENTS];
+  char* data;
+  enum email_fillin_mode {
+    HEADERS = 0,
+    DATA = 1
+  } mode;
 };
 
 /** Create a new email structure and return this
@@ -19,7 +24,7 @@ void delete_email(struct email* email);
 
 /** Set our sender
  */
-void email_set_sender(struct email* email, char* from);
+int email_set_sender(struct email* email, char* from);
 
 /** Add a recipient to our email structure
  * @return 1 if added correctly, 0 if not added
@@ -27,6 +32,15 @@ void email_set_sender(struct email* email, char* from);
  * MAX_RECIPIENTS recipients
  */
 int email_add_recipient(struct email* email, char* to);
+
+/** Simple check if the email structure has the
+ * from and to field filled in.
+ * @return If it has both the from and at least one
+ * recipient it'll return 1, else it'll return 0
+ */
+int email_has_recipients(struct email* email);
+
+int email_append_data(struct email* email, char* data);
 
 #ifdef DEV
 void print_emails(struct email* email);
