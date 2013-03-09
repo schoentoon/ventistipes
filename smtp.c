@@ -47,6 +47,7 @@ void closeMailListener()
 static char* _220_HELLO    = "220 Hello\n";
 static char* _250_OK       = "250 Ok\n";
 static char* _354_GO_AHEAD = "354 Go ahead\n";
+static char* _221_BYE      = "221 Bye\n";
 
 static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
 {
@@ -88,10 +89,15 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
         email->mode = DATA_LAST_LINE_EMPTY;
       break;
     case DATA_LAST_LINE_EMPTY:
-      if (string_equals(line, "."))
+      if (string_equals(line, ".")) {
         bufferevent_write(bev, _250_OK, strlen(_250_OK));
-      else
+        email->mode = DATA_DONE;
+      } else
         email->mode = DATA;
+      break;
+    case DATA_DONE: /* We are not closing the connection here, that is the clients job */
+      if (string_equals(line, "QUIT"))
+        bufferevent_write(bev, _221_BYE, strlen(_221_BYE));
       break;
     }
     printf("I got the following line: %s\n", line);
