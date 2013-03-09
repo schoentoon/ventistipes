@@ -49,6 +49,7 @@ static char* _250_OK            = "250 Ok\n";
 static char* _354_GO_AHEAD      = "354 Go ahead\n";
 static char* _221_BYE           = "221 Bye\n";
 static char* _502_NOT_SUPPORTED = "502 Command not implemented\n";
+static char* _503_BAD_SEQUENCE  = "503 Bad sequence of commands\n";
 
 static void smtp_conn_readcb(struct bufferevent *bev, void* args)
 {
@@ -77,9 +78,12 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
         } else if (string_startsWith(line, "RCPT TO:<")) {
           email_add_recipient(email, line);
           bufferevent_write(bev, _250_OK, strlen(_250_OK));
-        } else if (email_has_recipients(email) && string_equals(line, "DATA")) {
-          bufferevent_write(bev, _354_GO_AHEAD, strlen(_354_GO_AHEAD));
-          email->mode = DATA_HEADERS;
+        } else if (string_equals(line, "DATA")) {
+          if (email_has_recipients(email)) {
+            bufferevent_write(bev, _354_GO_AHEAD, strlen(_354_GO_AHEAD));
+            email->mode = DATA_HEADERS;
+          } else
+            bufferevent_write(bev, _503_BAD_SEQUENCE, strlen(_503_BAD_SEQUENCE));
         }
       }
       break;
@@ -101,6 +105,8 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
         email->mode = DATA_DONE;
       } else
         email->mode = DATA;
+      break;
+    default:
       break;
     }
 #ifdef DEV
