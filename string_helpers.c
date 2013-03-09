@@ -7,7 +7,8 @@ int string_startsWith(char* line, char* start)
   int line_len = strlen(line);
   int start_len = strlen(start);
   int lowest = (line_len < start_len) ? line_len : start_len;
-  for (int i = 0; i < lowest; i++) {
+  int i;
+  for (i = 0; i < lowest; i++) {
     if (line[i] != start[i])
       return 0;
   }
@@ -23,7 +24,8 @@ char* stripOutEmailAddress(char* line)
 {
   int length_needed = 0;
   int start = 0;
-  for (int i = 0; i < strlen(line); i++) {
+  int i;
+  for (i = 0; i < strlen(line); i++) {
     if (line[i] == '<') {
       start = i+1;
       length_needed = 1;
@@ -35,7 +37,7 @@ char* stripOutEmailAddress(char* line)
   }
   if (length_needed) {
     char* output = malloc(length_needed);
-    for (int i = 0; i < length_needed; i++)
+    for (i = 0; i < length_needed; i++)
       output[i] = line[start+i];
     output[length_needed] = '\0';
     return output;

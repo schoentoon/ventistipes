@@ -18,7 +18,8 @@ void delete_email(struct email* email)
   if (email) {
     if (email->from)
       free(email->from);
-    for (int i = 0; i < MAX_RECIPIENTS; i++) {
+    int i;
+    for (i = 0; i < MAX_RECIPIENTS; i++) {
       if (email->to[i])
         free(email->to[i]);
       else
@@ -44,7 +45,8 @@ int email_add_recipient(struct email* email, char* to)
 {
   if (email->mode != HEADERS)
     return 0;
-  for (int i = 0; i < MAX_RECIPIENTS; i++) {
+  int i;
+  for (i = 0; i < MAX_RECIPIENTS; i++) {
     if (email->to[i] == NULL) {
       email->to[i] = stripOutEmailAddress(to);
       return 1;
@@ -64,7 +66,8 @@ int email_set_subject(struct email* email, char* line)
   if (line_length < 8)
     return 0;
   email->subject = malloc(line_length - 8); /* Subject: is 9 characters (with the space) but we need \0 too you know */
-  for (int i = 0; i < line_length - 8; i++)
+  int i;
+  for (i = 0; i < line_length - 8; i++)
     email->subject[i] = line[i+9];
   return 1;
 }
@@ -96,7 +99,8 @@ void print_emails(struct email* email)
   if (!email->to[0])
     printf("nobody.\n");
   else {
-    for (int i = 0; i < MAX_RECIPIENTS; i++) {
+    int i;
+    for (i = 0; i < MAX_RECIPIENTS; i++) {
       if (email->to[i]) {
         if (i == 0)
           printf("%s", email->to[i]);
