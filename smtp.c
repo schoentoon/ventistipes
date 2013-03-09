@@ -54,7 +54,7 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
   struct email* email = (struct email*) user_data;
   size_t len;
   char* line = evbuffer_readln(buffer, &len, EVBUFFER_EOL_CRLF);
-  if (line) {
+  while (line) {
     switch (email->mode) {
     case HEADERS:
       if (len >= 4 && !email->ehlo) { /* Could be an EHLO or HELO */
@@ -81,6 +81,7 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
     }
     printf("I got the following line: %s\n", line);
     free(line);
+    line = evbuffer_readln(buffer, &len, EVBUFFER_EOL_CRLF);
   }
 }
 

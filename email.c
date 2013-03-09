@@ -56,9 +56,10 @@ int email_append_data(struct email* email, char* data)
   if (email->mode != DATA)
     return 0;
   if (email->data) {
-    char buf[strlen(email->data)+strlen(data)+1];
-    snprintf(buf, sizeof(buf),"%s\n%s", email->data, data);
-    email->data = &buf;
+    size_t length = strlen(email->data) + strlen(data) + 2; /* One for \n and one for \0 */
+    email->data = realloc(email->data, length);
+    strncat(email->data, "\n", length);
+    strncat(email->data, data, length);
   } else {
     email->data = malloc(strlen(data+1));
     strcpy(email->data, data);
