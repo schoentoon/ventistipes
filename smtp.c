@@ -100,7 +100,9 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
         bufferevent_write(bev, _221_BYE, strlen(_221_BYE));
       break;
     }
+#ifdef DEV
     printf("I got the following line: %s\n", line);
+#endif
     free(line);
     line = evbuffer_readln(buffer, &len, EVBUFFER_EOL_CRLF);
   }
@@ -108,8 +110,10 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
 
 static void smtp_conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 {
+#ifdef DEV
   if (events & BEV_EVENT_EOF)
     printf("Connection closed.\n");
+#endif
   bufferevent_free(bev);
   struct email* email = (struct email*) user_data;
 #ifdef DEV
