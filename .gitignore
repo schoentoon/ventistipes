@@ -1,0 +1,12 @@
+*.o
+*.lib
+*.a
+*.so
+*.so.*
+*.dylib
+*.out
+*.app
+bin/
+build/
+*~
+*.swp
