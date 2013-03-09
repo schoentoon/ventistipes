@@ -129,7 +129,6 @@ static void smtp_conn_eventcb(struct bufferevent *bev, short events, void* args)
   print_emails(email);
 #endif
   delete_email(email);
-  free(args);
 }
 
 static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
