@@ -12,7 +12,8 @@ struct email {
   enum email_fillin_mode {
     HEADERS = 0,
     DATA_HEADERS = 1,
-    DATA = 2
+    DATA = 2,
+    DATA_LAST_LINE_EMPTY = 3
   } mode;
 };
 

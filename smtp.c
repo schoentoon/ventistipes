@@ -84,6 +84,14 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
     case DATA:
       if (strlen(line) > 0)
         email_append_data(email, line);
+      else
+        email->mode = DATA_LAST_LINE_EMPTY;
+      break;
+    case DATA_LAST_LINE_EMPTY:
+      if (string_equals(line, "."))
+        bufferevent_write(bev, _250_OK, strlen(_250_OK));
+      else
+        email->mode = DATA;
       break;
     }
     printf("I got the following line: %s\n", line);
