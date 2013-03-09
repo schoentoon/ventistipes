@@ -106,10 +106,6 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
   }
 }
 
-static void smtp_conn_writecb(struct bufferevent *bev, void *user_data)
-{
-}
-
 static void smtp_conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 {
   if (events & BEV_EVENT_EOF)
@@ -134,7 +130,7 @@ static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
     return;
   }
   struct email* email = new_email();
-  bufferevent_setcb(bev, smtp_conn_readcb, smtp_conn_writecb, smtp_conn_eventcb, email);
+  bufferevent_setcb(bev, smtp_conn_readcb, NULL, smtp_conn_eventcb, email);
   bufferevent_enable(bev, EV_WRITE|EV_READ);
   bufferevent_write(bev, _220_HELLO, strlen(_220_HELLO));
 }
