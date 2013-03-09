@@ -7,10 +7,12 @@ struct email {
   int ehlo;
   char* from;
   char* to[MAX_RECIPIENTS];
+  char* subject;
   char* data;
   enum email_fillin_mode {
     HEADERS = 0,
-    DATA = 1
+    DATA_HEADERS = 1,
+    DATA = 2
   } mode;
 };
 
@@ -39,6 +41,8 @@ int email_add_recipient(struct email* email, char* to);
  * recipient it'll return 1, else it'll return 0
  */
 int email_has_recipients(struct email* email);
+
+int email_set_subject(struct email* email, char* line);
 
 int email_append_data(struct email* email, char* data);
 

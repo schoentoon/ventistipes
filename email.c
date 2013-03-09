@@ -51,6 +51,17 @@ int email_has_recipients(struct email* email)
   return (email->from && email->to[0]) ? 1 : 0;
 }
 
+int email_set_subject(struct email* email, char* line)
+{
+  size_t line_length = strlen(line);
+  if (line_length < 8)
+    return 0;
+  email->subject = malloc(line_length - 8); /* Subject: is 9 characters (with the space) but we need \0 too you know */
+  for (int i = 0; i < line_length - 8; i++)
+    email->subject[i] = line[i+9];
+  return 1;
+}
+
 int email_append_data(struct email* email, char* data)
 {
   if (email->mode != DATA)
@@ -88,6 +99,11 @@ void print_emails(struct email* email)
     }
     printf("\n");
   }
+  printf("Subject: ");
+  if (email->subject)
+    printf("%s\n", email->subject);
+  else
+    printf("No subject\n");
   printf("Data: ");
   if (email->data)
     printf("%s\n", email->data);

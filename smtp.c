@@ -71,12 +71,19 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
           bufferevent_write(bev, _250_OK, strlen(_250_OK));
         } else if (email_has_recipients(email) && string_equals(line, "DATA")) {
           bufferevent_write(bev, _354_GO_AHEAD, strlen(_354_GO_AHEAD));
-          email->mode = DATA;
+          email->mode = DATA_HEADERS;
         }
       }
       break;
+    case DATA_HEADERS:
+      if (strlen(line) == 0)
+        email->mode = DATA;
+      else if (string_startsWith(line, "Subject: "))
+        email_set_subject(email, line);
+      break;
     case DATA:
-      email_append_data(email, line);
+      if (strlen(line) > 0)
+        email_append_data(email, line);
       break;
     }
     printf("I got the following line: %s\n", line);
