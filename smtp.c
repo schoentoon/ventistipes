@@ -83,6 +83,9 @@ static void smtp_conn_eventcb(struct bufferevent *bev, short events, void *user_
     printf("Connection closed.\n");
   bufferevent_free(bev);
   struct email* email = (struct email*) user_data;
+#ifdef DEV
+  print_emails(email);
+#endif
   delete_email(email);
 }
 

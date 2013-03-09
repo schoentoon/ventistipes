@@ -28,4 +28,8 @@ void email_set_sender(struct email* email, char* from);
  */
 int email_add_recipient(struct email* email, char* to);
 
+#ifdef DEV
+void print_emails(struct email* email);
+#endif
+
 #endif //_EMAIL_H

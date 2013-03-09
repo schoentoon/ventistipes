@@ -13,3 +13,27 @@ int startsWith(char* line, char* start)
   }
   return 1;
 }
+
+char* stripOutEmailAddress(char* line)
+{
+  int length_needed = 0;
+  int start = 0;
+  for (int i = 0; i < strlen(line); i++) {
+    if (line[i] == '<') {
+      start = i+1;
+      length_needed = 1;
+    } else if (line[i] == '>') {
+      length_needed--;
+      break;
+    } else if (length_needed)
+      length_needed++;
+  }
+  if (length_needed) {
+    char* output = malloc(length_needed);
+    for (int i = 0; i < length_needed; i++)
+      output[i] = line[start+i];
+    output[length_needed] = '\0';
+    return output;
+  }
+  return NULL;
+}
