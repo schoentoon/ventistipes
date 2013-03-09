@@ -44,18 +44,25 @@ void closeMailListener()
 /** All the internal smtp stuff is below here, hidden from the outside world really.
  */
 
-static char* _220_HELLO    = "220 Hello\n";
-static char* _250_OK       = "250 Ok\n";
-static char* _354_GO_AHEAD = "354 Go ahead\n";
-static char* _221_BYE      = "221 Bye\n";
+static char* _220_HELLO         = "220 Hello\n";
+static char* _250_OK            = "250 Ok\n";
+static char* _354_GO_AHEAD      = "354 Go ahead\n";
+static char* _221_BYE           = "221 Bye\n";
+static char* _502_NOT_SUPPORTED = "502 Command not implemented\n";
 
-static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
+static void smtp_conn_readcb(struct bufferevent *bev, void* args)
 {
   struct evbuffer* buffer = bufferevent_get_input(bev);
-  struct email* email = (struct email*) user_data;
+  struct email* email = (struct email*) args;
   size_t len;
   char* line = evbuffer_readln(buffer, &len, EVBUFFER_EOL_CRLF);
   while (line) {
+    if (email->mode != DATA && email->mode != DATA_LAST_LINE_EMPTY) {
+      if (string_equals(line, "QUIT"))
+        bufferevent_write(bev, _221_BYE, strlen(_221_BYE));
+      else if (string_equals(line, "RSET"))
+        bufferevent_write(bev, _502_NOT_SUPPORTED, strlen(_502_NOT_SUPPORTED));
+    }
     switch (email->mode) {
     case HEADERS:
       if (len >= 4 && !email->ehlo) { /* Could be an EHLO or HELO */
@@ -95,10 +102,6 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
       } else
         email->mode = DATA;
       break;
-    case DATA_DONE: /* We are not closing the connection here, that is the clients job */
-      if (string_equals(line, "QUIT"))
-        bufferevent_write(bev, _221_BYE, strlen(_221_BYE));
-      break;
     }
 #ifdef DEV
     printf("I got the following line: %s\n", line);
@@ -108,18 +111,19 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
   }
 }
 
-static void smtp_conn_eventcb(struct bufferevent *bev, short events, void *user_data)
+static void smtp_conn_eventcb(struct bufferevent *bev, short events, void* args)
 {
 #ifdef DEV
   if (events & BEV_EVENT_EOF)
     printf("Connection closed.\n");
 #endif
   bufferevent_free(bev);
-  struct email* email = (struct email*) user_data;
+  struct email* email = (struct email*) args;
 #ifdef DEV
   print_emails(email);
 #endif
   delete_email(email);
+  free(args);
 }
 
 static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd

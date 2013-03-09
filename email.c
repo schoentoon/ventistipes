@@ -15,13 +15,20 @@ struct email* new_email()
 
 void delete_email(struct email* email)
 {
-  if (email->from)
-    free(email->from);
-  for (int i = 0; i < MAX_RECIPIENTS; i++) {
-    if (email->to[i])
-      free(email->to[i]);
-    else
-      break;
+  if (email) {
+    if (email->from)
+      free(email->from);
+    for (int i = 0; i < MAX_RECIPIENTS; i++) {
+      if (email->to[i])
+        free(email->to[i]);
+      else
+        break;
+    }
+    if (email->subject)
+      free(email->subject);
+    if (email->data)
+      free(email->data);
+    free(email);
   }
 }
 
