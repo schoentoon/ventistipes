@@ -1,5 +1,6 @@
 #include "smtp.h"
 
+#include "email.h"
 #include "macros.h"
 #include "string_helpers.h"
 
@@ -46,32 +47,27 @@ void closeMailListener()
 static char* _220_HELLO = "220 Hello\n";
 static char* _250_OK    = "250 Ok\n";
 
-struct client {
-  char* to;
-  char* from;
-  int ehlo;
-};
-
 static void smtp_conn_readcb(struct bufferevent *bev, void* user_data)
 {
   struct evbuffer* buffer = bufferevent_get_input(bev);
-  struct client* client = (struct client*) user_data;
+  struct email* email = (struct email*) user_data;
   size_t len;
   char* line = evbuffer_readln(buffer, &len, EVBUFFER_EOL_CRLF);
   if (line) {
-    if (len >= 4 && !client->ehlo) { /* Could be an EHLO or HELO */
+    if (len >= 4 && !email->ehlo) { /* Could be an EHLO or HELO */
       if (startsWith(line, "EHLO") || startsWith(line, "HELO")) {
-        client->ehlo = 1;
+        email->ehlo = 1;
         bufferevent_write(bev, _250_OK, strlen(_250_OK));
       }
-    } else if (client->ehlo) {
+    } else if (email->ehlo) {
       if (startsWith(line, "MAIL FROM:<")) {
-        client->from = malloc(strlen (line)+1);
-        strcpy(client->from, line);
+        email->from = malloc(strlen (line)+1);
+        strcpy(email->from, line);
         bufferevent_write(bev, _250_OK, strlen(_250_OK));
       } else if (startsWith(line, "RCPT TO:<")) {
-        client->to = malloc(strlen (line)+1);
-        strcpy(client->to, line);
+        char* copy = malloc(strlen(line+1));
+        strcpy(copy, line);
+        add_recipient(email, copy);
         bufferevent_write(bev, _250_OK, strlen(_250_OK));
       }
     }
@@ -89,6 +85,8 @@ static void smtp_conn_eventcb(struct bufferevent *bev, short events, void *user_
   if (events & BEV_EVENT_EOF)
     printf("Connection closed.\n");
   bufferevent_free(bev);
+  struct email* email = (struct email*) user_data;
+  delete_email(email);
 }
 
 static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
@@ -102,8 +100,8 @@ static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
     event_base_loopbreak(base);
     return;
   }
-  struct client* client = calloc(1, sizeof(*client));
-  bufferevent_setcb(bev, smtp_conn_readcb, smtp_conn_writecb, smtp_conn_eventcb, client);
+  struct email* email = new_email();
+  bufferevent_setcb(bev, smtp_conn_readcb, smtp_conn_writecb, smtp_conn_eventcb, email);
   bufferevent_enable(bev, EV_WRITE|EV_READ);
   bufferevent_write(bev, _220_HELLO, strlen(_220_HELLO));
 }

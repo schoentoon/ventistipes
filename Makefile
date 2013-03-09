@@ -4,7 +4,7 @@ LFLAGS := -levent
 DEFINES:= $(DEFINES)
 CC     := gcc
 BINARY := ventstipes
-DEPS   := build/main.o build/smtp.o build/string_helpers.o
+DEPS   := build/main.o build/smtp.o build/string_helpers.o build/email.o
 
 .PHONY: all clean dev
 
