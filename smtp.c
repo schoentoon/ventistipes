@@ -3,6 +3,7 @@
 #include "email.h"
 #include "macros.h"
 #include "safefree.h"
+#include "push/push.h"
 #include "string_helpers.h"
 
 #include <event2/listener.h>
@@ -113,6 +114,7 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
       if (string_equals(line, ".")) {
         bufferevent_write(bev, _250_OK, strlen(_250_OK));
         email->mode = DATA_DONE;
+        email_for_each_recipient(email, bufferevent_get_base(bev), launch_push_queries);
       } else
         email->mode = DATA;
       break;

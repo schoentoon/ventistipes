@@ -4,7 +4,8 @@ LFLAGS := -levent -lpq
 DEFINES:= $(DEFINES)
 CC     := gcc
 BINARY := ventstipes
-DEPS   := build/main.o build/smtp.o build/string_helpers.o build/email.o build/postgres.o build/safefree.o
+DEPS   := build/main.o build/smtp.o build/string_helpers.o build/email.o build/postgres.o build/safefree.o \
+build/push/push.o
 
 .PHONY: all clean dev
 
@@ -14,7 +15,7 @@ dev: clean
 	DEFINES="-DDEV" $(MAKE)
 
 build:
-	-mkdir build bin
+	-mkdir -p build/push bin
 
 %.o: $(patsubst build/%o,%c,$@)
 	$(CC) $(CFLAGS) $(DEFINES) $(INC) -c -o $@ $(patsubst build/%o,%c,$@)
@@ -23,7 +24,7 @@ link: $(DEPS)
 	$(CC) $(CFLAGS) $(DEFINES) $(INC) -o bin/$(BINARY) $(DEPS) $(LFLAGS)
 
 clean:
-	rm -fv $(DEPS) bin/$(BINARY)
+	rm -rfv build bin
 
 install:
 	cp bin/$(BINARY) /usr/bin/$(BINARY)

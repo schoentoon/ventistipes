@@ -20,18 +20,25 @@ struct email {
 };
 
 /** Create a new email structure and return this
+ * @return a new email structure
  */
 struct email* new_email();
 
 /** Clean up this email structure
+ * @param email The email structure we want to clean up
  */
 void delete_email(struct email* email);
 
 /** Set our sender
+ * @param email The email structure we want to have this sender
+ * @param from The raw line we want to parse the email address out of
+ * @return 1 in case we set it correctly, else we'll return 0
  */
 int email_set_sender(struct email* email, char* from);
 
 /** Add a recipient to our email structure
+ * @param email The email structure we want to have this recipient
+ * @param to The raw line we want to parse the email address out of
  * @return 1 if added correctly, 0 if not added
  * this will only occur when there are more than
  * MAX_RECIPIENTS recipients
@@ -40,17 +47,44 @@ int email_add_recipient(struct email* email, char* to);
 
 /** Simple check if the email structure has the
  * from and to field filled in.
+ * @param email The email structure we want to check for recipients
  * @return If it has both the from and at least one
  * recipient it'll return 1, else it'll return 0
  */
 int email_has_recipients(struct email* email);
 
+/** Get the last recipient
+ * @return Returns the last recipient in the to array
+ * returns NULL if there are no recipients
+ */
 char *email_get_last_recipient(struct email* email);
 
+/** Remove an email address from the mail structure
+ * @param email The structure to remove an address from
+ * @param addr THe address to remove
+ * @return 1 in case there was something deleted, else it'll return 0
+ */
 int email_remove_email_from_recipients(struct email* email, char* addr);
 
+/** Parse the subject and set it to the email structure
+ * @param email The email structure we want to have the subject
+ * @param line The raw smtp line to parse for the subject
+ * @return 1 in case there is a subject set, else it'll return 0
+ */
 int email_set_subject(struct email* email, char* line);
 
+/** Execute this function pointer for each recipient
+ * @param email The email structure to use for the recipients
+ * @param context Void pointer to pass to the function pointer
+ * @param execute The function pointer to execute for each recipient
+ */
+void email_for_each_recipient(struct email* email, void* context, void (*execute)(char* address, void* context, struct email* email));
+
+/** Parse a raw line to 'append' it to the data field in email
+ * @param email The email structure we want to have this data
+ * @param data The data we want to append
+ * @return 1 in case we're in the right mode, else it'll return 0
+ */
 int email_append_data(struct email* email, char* data);
 
 #ifdef DEV

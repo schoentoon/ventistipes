@@ -109,6 +109,15 @@ int email_set_subject(struct email* email, char* line)
   return 1;
 }
 
+void email_for_each_recipient(struct email* email, void* context, void (*execute)(char* address, void* context, struct email* email))
+{
+  int i;
+  for (i = 0; i < MAX_RECIPIENTS; i++) {
+    if (email->to[i])
+      execute(email->to[i], context, email);
+  }
+}
+
 int email_append_data(struct email* email, char* data)
 {
   if (email->mode != DATA)
@@ -122,7 +131,7 @@ int email_append_data(struct email* email, char* data)
     email->data = malloc(strlen(data+1));
     strcpy(email->data, data);
   }
-  return 0;
+  return 1;
 }
 
 #ifdef DEV
