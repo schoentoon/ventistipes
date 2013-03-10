@@ -16,6 +16,7 @@ struct email* new_email()
     email->to[i] = NULL;
   email->subject = NULL;
   email->data= NULL;
+  email->bev = NULL;
   email->mode = HEADERS;
   return email;
 }
@@ -76,6 +77,22 @@ char *email_get_last_recipient(struct email* email)
       output = email->to[i];
     else
       break;
+  }
+  return output;
+}
+
+int email_remove_email_from_recipients(struct email* email, char* addr)
+{
+  int i;
+  int output = 0;
+  for (i = 0; i < MAX_RECIPIENTS; i++) {
+    if (email->to[i] && string_equals(email->to[i], addr)) {
+      SAFEFREE(email->to[i]);
+      int j;
+      for (j = i; j < MAX_RECIPIENTS; j++)
+        email->to[j] = email->to[j+1];
+      output = 1;
+    }
   }
   return output;
 }

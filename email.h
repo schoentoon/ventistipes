@@ -9,6 +9,7 @@ struct email {
   char* to[MAX_RECIPIENTS];
   char* subject;
   char* data;
+  struct bufferevent *bev;
   enum email_fillin_mode {
     HEADERS = 0,
     DATA_HEADERS = 1,
@@ -45,6 +46,8 @@ int email_add_recipient(struct email* email, char* to);
 int email_has_recipients(struct email* email);
 
 char *email_get_last_recipient(struct email* email);
+
+int email_remove_email_from_recipients(struct email* email, char* addr);
 
 int email_set_subject(struct email* email, char* line);
 

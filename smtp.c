@@ -55,7 +55,8 @@ static char* _502_NOT_SUPPORTED = "502 Command not implemented\n";
 static char* _503_BAD_SEQUENCE  = "503 Bad sequence of commands\n";
 static char* _550_NOT_ALLOWED   = "550 Not allowed\n";
 
-static void check_email_callback(PGresult* res, void* email, char* query);
+static void check_email_from_callback(PGresult* res, void* email, char* query);
+static void check_email_to_callback(PGresult* res, void* email, char* query);
 char* create_check_email_from_query(char* email);
 char* create_check_email_to_query(char* email);
 
@@ -83,10 +84,10 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
         if (string_startsWith(line, "MAIL FROM:<")) {
           email_set_sender(email, line);
           if (email->from)
-            databaseQuery(create_check_email_from_query(email->from), check_email_callback, bev);
+            databaseQuery(create_check_email_from_query(email->from), check_email_from_callback, email);
         } else if (string_startsWith(line, "RCPT TO:<")) {
           if (email_add_recipient(email, line))
-            databaseQuery(create_check_email_to_query(email_get_last_recipient(email)), check_email_callback, bev);
+            databaseQuery(create_check_email_to_query(email_get_last_recipient(email)), check_email_to_callback, email);
         } else if (string_equals(line, "DATA")) {
           if (email_has_recipients(email)) {
             bufferevent_write(bev, _354_GO_AHEAD, strlen(_354_GO_AHEAD));
@@ -151,21 +152,50 @@ static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
     return;
   }
   struct email* email = new_email();
+  email->bev = bev;
   bufferevent_setcb(bev, smtp_conn_readcb, NULL, smtp_conn_eventcb, email);
   bufferevent_enable(bev, EV_WRITE|EV_READ);
   bufferevent_write(bev, _220_HELLO, strlen(_220_HELLO));
 }
 
-static void check_email_callback(PGresult* res, void* context, char* query)
+static void check_email_from_callback(PGresult* res, void* context, char* query)
 {
-  struct bufferevent* bev = (struct bufferevent*) context;
+  struct email* email = (struct email*) context;
+  struct bufferevent* bev = email->bev;
 #ifdef DEV
   printf("Query %s returned with %d rows.\n", query, PQntuples(res));
 #endif
   if (PQntuples(res) > 0)
     bufferevent_write(bev, _250_OK, strlen(_250_OK));
-  else
+  else {
     bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+    SAFEFREE(email->from);
+  }
+  SAFEFREE(query);
+}
+
+static void check_email_to_callback(PGresult* res, void* context, char* query)
+{
+  struct email* email = (struct email*) context;
+  struct bufferevent* bev = email->bev;
+#ifdef DEV
+  printf("Query %s returned with %d rows.\n", query, PQntuples(res));
+#endif
+  if (PQntuples(res) > 0)
+    bufferevent_write(bev, _250_OK, strlen(_250_OK));
+  else {
+    bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+    size_t len = strlen(query);
+    size_t email_len = len - 38 -2;
+    char addr[email_len];
+    int i;
+    for (i = 0; i < email_len; i++)
+      addr[i] = query[i + 38];
+    addr[email_len] = '\0';
+    char* addr_p = malloc(email_len);
+    email_remove_email_from_recipients(email, strcpy(addr_p, addr));
+    SAFEFREE(addr_p);
+  }
   SAFEFREE(query);
 }
 
