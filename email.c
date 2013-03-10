@@ -1,5 +1,6 @@
 #include "email.h"
 
+#include "safefree.h"
 #include "string_helpers.h"
 
 #include <stdlib.h>
@@ -9,6 +10,12 @@ struct email* new_email()
 {
   struct email* email = malloc(sizeof(struct email));
   email->ehlo = 0;
+  email->from = NULL;
+  int i;
+  for (i = 0; i < MAX_RECIPIENTS; i++)
+    email->to[i] = NULL;
+  email->subject = NULL;
+  email->data= NULL;
   email->mode = HEADERS;
   return email;
 }
@@ -17,19 +24,19 @@ void delete_email(struct email* email)
 {
   if (email) {
     if (email->from)
-      free(email->from);
+      SAFEFREE(email->from);
     int i;
     for (i = 0; i < MAX_RECIPIENTS; i++) {
       if (email->to[i])
-        free(email->to[i]);
+        SAFEFREE(email->to[i]);
       else
         break;
     }
     if (email->subject)
-      free(email->subject);
+      SAFEFREE(email->subject);
     if (email->data)
-      free(email->data);
-    free(email);
+      SAFEFREE(email->data);
+    SAFEFREE(email);
   }
 }
 
@@ -106,7 +113,8 @@ void print_emails(struct email* email)
           printf("%s", email->to[i]);
         else
           printf(", %s", email->to[i]);
-      }
+      } else
+        break;
     }
     printf("\n");
   }

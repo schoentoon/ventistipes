@@ -111,6 +111,7 @@ int databaseQuery(char* query, void (*callback)(PGresult*,void*,char*), void* co
   query_struct->callback = callback;
   query_struct->context = context;
   query_struct->sent = 0;
+  query_struct->next = NULL;
   int i;
   int lowest = 0;
   unsigned int most_empty_size = UINT_MAX;

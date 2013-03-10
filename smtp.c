@@ -2,6 +2,7 @@
 
 #include "email.h"
 #include "macros.h"
+#include "safefree.h"
 #include "string_helpers.h"
 
 #include <event2/listener.h>
@@ -164,15 +165,15 @@ static void check_email_callback(PGresult* res, void* context, char* query)
     bufferevent_write(bev, _250_OK, strlen(_250_OK));
   else
     bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+  SAFEFREE(query);
 }
 
 char* create_check_email_query(char* email)
 { /* SELECT 1 FROM allowed_in_mail WHERE email = 'email@addre.ss'; */
   size_t email_len = strlen(email); /* I am aware that I should escape this right here.. */
   size_t output_len = email_len + 45 + 2 + 1; /* Sadly that requires a PGconn* object, which I don't have here. */
+  char buffer[output_len];
+  snprintf(buffer, sizeof(buffer), "SELECT 1 FROM allowed_in_mail WHERE email = '%s';", email);
   char* output = malloc(output_len);
-  strcpy(output, "SELECT 1 FROM allowed_in_mail WHERE email = '");
-  strncat(output, email, output_len);
-  strncat(output, "';", output_len);
-  return output;
+  return strcpy(output, buffer);
 }
