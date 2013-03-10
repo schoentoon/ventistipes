@@ -1,10 +1,10 @@
 CFLAGS := $(CFLAGS) -Wall -O2 -mtune=native -g
 INC    := -I. $(INC)
-LFLAGS := -levent
+LFLAGS := -levent -lpq
 DEFINES:= $(DEFINES)
 CC     := gcc
 BINARY := ventstipes
-DEPS   := build/main.o build/smtp.o build/string_helpers.o build/email.o
+DEPS   := build/main.o build/smtp.o build/string_helpers.o build/email.o build/postgres.o
 
 .PHONY: all clean dev
 

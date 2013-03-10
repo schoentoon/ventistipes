@@ -135,8 +135,7 @@ static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
                             ,struct sockaddr *sa, int socklen, void *user_data)
 {
   struct event_base* base = user_data;
-  struct bufferevent* bev;
-  bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
+  struct bufferevent* bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
   if (!bev) {
     fprintf(stderr, "Error constructing bufferevent!");
     event_base_loopbreak(base);
