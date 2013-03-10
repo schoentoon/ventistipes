@@ -44,6 +44,8 @@ int email_add_recipient(struct email* email, char* to);
  */
 int email_has_recipients(struct email* email);
 
+char *email_get_last_recipient(struct email* email);
+
 int email_set_subject(struct email* email, char* line);
 
 int email_append_data(struct email* email, char* data);

@@ -56,7 +56,8 @@ static char* _503_BAD_SEQUENCE  = "503 Bad sequence of commands\n";
 static char* _550_NOT_ALLOWED   = "550 Not allowed\n";
 
 static void check_email_callback(PGresult* res, void* email, char* query);
-char* create_check_email_query(char* email);
+char* create_check_email_from_query(char* email);
+char* create_check_email_to_query(char* email);
 
 static void smtp_conn_readcb(struct bufferevent *bev, void* args)
 {
@@ -82,10 +83,10 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
         if (string_startsWith(line, "MAIL FROM:<")) {
           email_set_sender(email, line);
           if (email->from)
-            databaseQuery(create_check_email_query(email->from), check_email_callback, bev);
+            databaseQuery(create_check_email_from_query(email->from), check_email_callback, bev);
         } else if (string_startsWith(line, "RCPT TO:<")) {
-          email_add_recipient(email, line);
-          bufferevent_write(bev, _250_OK, strlen(_250_OK));
+          if (email_add_recipient(email, line))
+            databaseQuery(create_check_email_to_query(email_get_last_recipient(email)), check_email_callback, bev);
         } else if (string_equals(line, "DATA")) {
           if (email_has_recipients(email)) {
             bufferevent_write(bev, _354_GO_AHEAD, strlen(_354_GO_AHEAD));
@@ -168,12 +169,22 @@ static void check_email_callback(PGresult* res, void* context, char* query)
   SAFEFREE(query);
 }
 
-char* create_check_email_query(char* email)
+char* create_check_email_from_query(char* email)
 { /* SELECT 1 FROM allowed_in_mail WHERE email = 'email@addre.ss'; */
   size_t email_len = strlen(email); /* I am aware that I should escape this right here.. */
   size_t output_len = email_len + 45 + 2 + 1; /* Sadly that requires a PGconn* object, which I don't have here. */
   char buffer[output_len];
   snprintf(buffer, sizeof(buffer), "SELECT 1 FROM allowed_in_mail WHERE email = '%s';", email);
+  char* output = malloc(output_len);
+  return strcpy(output, buffer);
+}
+
+char* create_check_email_to_query(char* email)
+{ /* SELECT 1 FROM push_ids WHERE email = 'email@addre.ss'; */
+  size_t email_len = strlen(email);
+  size_t output_len = email_len + 38 + 2 + 1;
+  char buffer[output_len];
+  snprintf(buffer, sizeof(buffer), "SELECT 1 FROM push_ids WHERE email = '%s';", email);
   char* output = malloc(output_len);
   return strcpy(output, buffer);
 }

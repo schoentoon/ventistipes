@@ -67,6 +67,19 @@ int email_has_recipients(struct email* email)
   return (email->from && email->to[0]) ? 1 : 0;
 }
 
+char *email_get_last_recipient(struct email* email)
+{
+  int i;
+  char* output = NULL;
+  for (i = 0; i < MAX_RECIPIENTS; i++) {
+    if (email->to[i])
+      output = email->to[i];
+    else
+      break;
+  }
+  return output;
+}
+
 int email_set_subject(struct email* email, char* line)
 {
   size_t line_length = strlen(line);
