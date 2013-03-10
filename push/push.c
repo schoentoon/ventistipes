@@ -31,13 +31,31 @@ void launch_push_queries(char* address, void* context, struct email* email)
   databaseQuery(query, push_query_result, push_info);
 }
 
+#include "android.h"
+
+void (*push_functions[])(void*,char*,struct event_base*) = {
+  android_push,
+  NULL
+};
+
+int amount_of_push_functions()
+{
+  int i = 0;
+  while (push_functions[i])
+    i++;
+  return i;
+}
+
 static void push_query_result(PGresult* res, void* context, char* query)
 {
   struct push_info* push_info = (struct push_info*) context;
   int i;
   for (i = 0; i < PQntuples(res); i++) {
-    if (!PQgetisnull(res, i, 0) && !PQgetisnull(res, i, 1))
-      printf("Push id: %s, type: %s\n", PQgetvalue(res, i, 0), PQgetvalue(res, i, 1));
+    if (!PQgetisnull(res, i, 0) && !PQgetisnull(res, i, 1)) {
+      int type = atoi(PQgetvalue(res, i, 1));
+      if (type < amount_of_push_functions())
+        push_functions[type](context, PQgetvalue(res, i, 0), push_info->event_base);
+    }
   }
   SAFEFREE(push_info->subject);
   SAFEFREE(push_info->data);

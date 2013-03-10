@@ -5,7 +5,7 @@ DEFINES:= $(DEFINES)
 CC     := gcc
 BINARY := ventstipes
 DEPS   := build/main.o build/smtp.o build/string_helpers.o build/email.o build/postgres.o build/safefree.o \
-build/push/push.o
+build/push/push.o build/push/android.o
 
 .PHONY: all clean dev
 
