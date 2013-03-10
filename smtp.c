@@ -44,12 +44,18 @@ void closeMailListener()
 /** All the internal smtp stuff is below here, hidden from the outside world really.
  */
 
+#include "postgres.h"
+
 static char* _220_HELLO         = "220 Hello\n";
 static char* _250_OK            = "250 Ok\n";
 static char* _354_GO_AHEAD      = "354 Go ahead\n";
 static char* _221_BYE           = "221 Bye\n";
 static char* _502_NOT_SUPPORTED = "502 Command not implemented\n";
 static char* _503_BAD_SEQUENCE  = "503 Bad sequence of commands\n";
+static char* _550_NOT_ALLOWED   = "550 Not allowed\n";
+
+static void check_email_callback(PGresult* res, void* email, char* query);
+char* create_check_email_query(char* email);
 
 static void smtp_conn_readcb(struct bufferevent *bev, void* args)
 {
@@ -74,7 +80,8 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
       } else if (email->ehlo) {
         if (string_startsWith(line, "MAIL FROM:<")) {
           email_set_sender(email, line);
-          bufferevent_write(bev, _250_OK, strlen(_250_OK));
+          if (email->from)
+            databaseQuery(create_check_email_query(email->from), check_email_callback, bev);
         } else if (string_startsWith(line, "RCPT TO:<")) {
           email_add_recipient(email, line);
           bufferevent_write(bev, _250_OK, strlen(_250_OK));
@@ -145,4 +152,27 @@ static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
   bufferevent_setcb(bev, smtp_conn_readcb, NULL, smtp_conn_eventcb, email);
   bufferevent_enable(bev, EV_WRITE|EV_READ);
   bufferevent_write(bev, _220_HELLO, strlen(_220_HELLO));
+}
+
+static void check_email_callback(PGresult* res, void* context, char* query)
+{
+  struct bufferevent* bev = (struct bufferevent*) context;
+#ifdef DEV
+  printf("Query %s returned with %d rows.\n", query, PQntuples(res));
+#endif
+  if (PQntuples(res) > 0)
+    bufferevent_write(bev, _250_OK, strlen(_250_OK));
+  else
+    bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+}
+
+char* create_check_email_query(char* email)
+{ /* SELECT 1 FROM allowed_in_mail WHERE email = 'email@addre.ss'; */
+  size_t email_len = strlen(email); /* I am aware that I should escape this right here.. */
+  size_t output_len = email_len + 45 + 2 + 1; /* Sadly that requires a PGconn* object, which I don't have here. */
+  char* output = malloc(output_len);
+  strcpy(output, "SELECT 1 FROM allowed_in_mail WHERE email = '");
+  strncat(output, email, output_len);
+  strncat(output, "';", output_len);
+  return output;
 }
