@@ -12,6 +12,6 @@
 
 void initDatabasePool(struct event_base* base);
 
-int databaseQuery(char* query, void (*callback)(PGresult*,void*), void* context);
+int databaseQuery(char* query, void (*callback)(PGresult*,void*,char*), void* context);
 
 #endif //_POSTGRES_H

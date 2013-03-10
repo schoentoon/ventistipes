@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 struct query_struct {
-  void (*callback)(PGresult*,void*);
+  void (*callback)(PGresult*,void*,char*);
   void *context;
   char *query;
   char sent;
@@ -62,13 +62,13 @@ static void pq_timer(evutil_socket_t fd, short event, void *arg)
           databasePool[i]->queries->sent = 1;
         }
         if (databasePool[i]->conn && PQconsumeInput(databasePool[i]->conn) && !PQisBusy(databasePool[i]->conn)) {
-          PGresult* res = NULL;
-          do {
-            res = PQgetResult(databasePool[i]->conn);
+          PGresult* res = PQgetResult(databasePool[i]->conn);
+          while (res) {
             if (databasePool[i]->queries->callback)
-              databasePool[i]->queries->callback(res, databasePool[i]->queries->context);
+              databasePool[i]->queries->callback(res, databasePool[i]->queries->context, databasePool[i]->queries->query);
             PQclear(res);
-          } while (res);
+            res = PQgetResult(databasePool[i]->conn);
+          }
           databasePool[i]->query_count--;
           struct query_struct* old = databasePool[i]->queries;
           databasePool[i]->queries = databasePool[i]->queries->next;
@@ -102,7 +102,7 @@ void appendQueryPool(struct connection_struct* conn, struct query_struct* query)
   }
 }
 
-int databaseQuery(char* query, void (*callback)(PGresult*,void*), void* context)
+int databaseQuery(char* query, void (*callback)(PGresult*,void*,char*), void* context)
 {
   if (query == NULL)
     return 0;
