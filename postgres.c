@@ -43,6 +43,12 @@ void initDatabasePool(struct event_base* base)
   event_add(timer, &tv);
 }
 
+/* TODO This should be possible without an ugly timer like this
+ * It should be possible by listening for events on the file
+ * descriptor returned by PQsocket, as described in the following post
+ * http://jughead-digest.blogspot.nl/2007/12/asynchronous-sql-with-libevent-and.html
+ * I would use that code out of the box if it wasn't for libevent1.4
+ */
 static void pq_timer(evutil_socket_t fd, short event, void *arg)
 {
   int i;

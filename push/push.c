@@ -14,7 +14,7 @@ void launch_push_queries(char* address, void* context, struct email* email)
 { /* SELECT push_id, push_type FROM push_ids WHERE email = 'email@addre.ss'; */
   size_t email_len = strlen(address); /* I am aware that I should escape this right here.. */
   size_t output_len = email_len + 55 + 2 + 1; /* Sadly that requires a PGconn* object, which I don't have here. */
-  char buffer[output_len];
+  char buffer[output_len]; //TODO escape this query properly
   snprintf(buffer, sizeof(buffer), "SELECT push_id, push_type FROM push_ids WHERE email = '%s';", address);
   char* query = malloc(output_len);
   strcpy(query, buffer);
@@ -31,6 +31,7 @@ void launch_push_queries(char* address, void* context, struct email* email)
 
 #include "android.h"
 
+/* iOS/Windows phone anyone? */
 void (*push_functions[])(struct push_info*,char*,struct event_base*) = {
   android_push,
   NULL

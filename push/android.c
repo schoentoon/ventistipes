@@ -60,7 +60,7 @@ void android_push(struct push_info* push_info, char* push_id, struct event_base*
   bufferevent_write(bev, API_KEY, strlen(API_KEY));
   bufferevent_write(bev, _CRLF, strlen(_CRLF));
   bufferevent_write(bev, _CONTENT_LENGTH, strlen(_CONTENT_LENGTH));
-  char buffer[4096];
+  char buffer[4096]; //Could be overflowed atm, but then again the data field isn't supposed to be bigger than 4096 bytes..
   snprintf(buffer, sizeof(buffer), "{\"registration_ids\":[\"%s\"],\"data\":{\"subject\":\"%s\",\"data\":\"%s\"}}", push_id, push_info->subject, push_info->data);
   char length_buffer[4];
   snprintf(length_buffer, sizeof(length_buffer), "%zd", strlen(buffer));

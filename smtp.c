@@ -205,7 +205,7 @@ char* create_check_email_from_query(char* email)
 { /* SELECT 1 FROM allowed_in_mail WHERE email = 'email@addre.ss'; */
   size_t email_len = strlen(email); /* I am aware that I should escape this right here.. */
   size_t output_len = email_len + 45 + 2 + 1; /* Sadly that requires a PGconn* object, which I don't have here. */
-  char buffer[output_len];
+  char buffer[output_len]; //TODO escape the query parameters properly
   snprintf(buffer, sizeof(buffer), "SELECT 1 FROM allowed_in_mail WHERE email = '%s';", email);
   char* output = malloc(output_len);
   return strcpy(output, buffer);
