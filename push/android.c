@@ -40,7 +40,7 @@ static void android_eventcb(struct bufferevent *bev, short events, void* args)
 
 static char* _POST = "POST /gcm/send HTTP/1.0\r\n";
 static char* _HOST = "Host: android.googleapis.com\r\n";
-static char* _USER_AGENT = "User-Agent: Ventstipes\r\n";
+static char* _USER_AGENT = "User-Agent: Ventistipes\r\n";
 static char* _CONTENT_TYPE = "Content-Type: application/json\r\n";
 static char* _AUTH = "Authorization:key=";
 static char* _CRLF = "\r\n";
