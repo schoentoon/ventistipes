@@ -1,12 +1,16 @@
 #ifndef _POSTGRES_H
 #define _POSTGRES_H
 
+#include "dbinfo.h"
+
+#ifndef CONNINFO
+#  error "Did not find the info needed to connect to the database."
+#endif
+
 #include <event2/event.h>
 
 #define MAX_CONNECTIONS 10
 #define MAX_IDLE_TICKS 120
-
-#define CONNINFO "user=ventstipes dbname=ventstipes"
 
 #include <libpq-fe.h>
 
