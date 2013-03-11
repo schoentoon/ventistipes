@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "android.h"
+#include "push/android.h"
 
-#include "android_key.h"
+#include "config/gcm_key.h"
 
 #ifndef API_KEY
 #  error "Please define your API_KEY for gcm, you can register for one over here: https://code.google.com/apis/console"

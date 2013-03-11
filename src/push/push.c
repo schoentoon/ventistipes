@@ -15,10 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "push.h"
+#include "push/push.h"
 
-#include "../postgres.h"
-#include "../safefree.h"
+#include "postgres.h"
+#include "safefree.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -57,7 +57,7 @@ void launch_push_queries(char* address, void* context, struct email* email)
   databaseQuery(query, push_query_result, push_info);
 }
 
-#include "android.h"
+#include "push/android.h"
 
 /* iOS/Windows phone anyone? */
 void (*push_functions[])(struct push_info*,char*,struct event_base*) = {

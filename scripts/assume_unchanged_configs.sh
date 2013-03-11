@@ -1,3 +1,3 @@
 #!/bin/bash
-git update-index --assume-unchanged push/android_key.h
-git update-index --assume-unchanged dbinfo.h
+git update-index --assume-unchanged include/config/dbinfo.h
+git update-index --assume-unchanged include/config/gcm_key.h

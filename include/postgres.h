@@ -18,7 +18,7 @@
 #ifndef _POSTGRES_H
 #define _POSTGRES_H
 
-#include "dbinfo.h"
+#include "config/dbinfo.h"
 
 #ifndef CONNINFO
 #  error "Did not find the info needed to connect to the database."

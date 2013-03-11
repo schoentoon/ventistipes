@@ -1,5 +1,5 @@
 CFLAGS := $(CFLAGS) -Wall -O2 -mtune=native -g
-INC    := -I. $(INC)
+INC    := -Iinclude $(INC)
 LFLAGS := -levent -levent_openssl -lpq -lssl -lcrypto
 DEFINES:= $(DEFINES)
 CC     := gcc
@@ -17,8 +17,8 @@ dev: clean
 build:
 	-mkdir -p build/push bin
 
-%.o: $(patsubst build/%o,%c,$@)
-	$(CC) $(CFLAGS) $(DEFINES) $(INC) -c -o $@ $(patsubst build/%o,%c,$@)
+%.o: $(patsubst build/%o,src/%c,$@)
+	$(CC) $(CFLAGS) $(DEFINES) $(INC) -c -o $@ $(patsubst build/%o,src/%c,$@)
 
 link: $(DEPS)
 	$(CC) $(CFLAGS) $(DEFINES) $(INC) -o bin/$(BINARY) $(DEPS) $(LFLAGS)
