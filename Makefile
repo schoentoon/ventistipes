@@ -1,6 +1,6 @@
 CFLAGS := $(CFLAGS) -Wall -O2 -mtune=native -g
 INC    := -I. $(INC)
-LFLAGS := -levent -lpq
+LFLAGS := -levent -levent_openssl -lpq -lssl -lcrypto
 DEFINES:= $(DEFINES)
 CC     := gcc
 BINARY := ventstipes
