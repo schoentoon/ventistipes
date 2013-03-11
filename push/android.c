@@ -19,6 +19,9 @@ static void android_readcb(struct bufferevent *bev, void* args)
   struct evbuffer* buffer = bufferevent_get_input(bev);
   char* line = evbuffer_readln(buffer, NULL, EVBUFFER_EOL_CRLF);
   while (line) {
+#ifdef DEV
+    fprintf(stderr, "gcm: %s\n", line);
+#endif //DEV
     free(line);
     line = evbuffer_readln(buffer, NULL, EVBUFFER_EOL_CRLF);
   } /* Don't bother with this output, somehow we can read more than the http headers anyway */
@@ -62,6 +65,9 @@ void android_push(struct push_info* push_info, char* push_id, struct event_base*
   bufferevent_write(bev, _CONTENT_LENGTH, strlen(_CONTENT_LENGTH));
   char buffer[4096]; //Could be overflowed atm, but then again the data field isn't supposed to be bigger than 4096 bytes..
   snprintf(buffer, sizeof(buffer), "{\"registration_ids\":[\"%s\"],\"data\":{\"subject\":\"%s\",\"data\":\"%s\"}}", push_id, push_info->subject, push_info->data);
+#ifdef DEV
+  printf("%s\n",buffer);
+#endif //DEV
   char length_buffer[4];
   snprintf(length_buffer, sizeof(length_buffer), "%zd", strlen(buffer));
   bufferevent_write(bev, length_buffer, strlen(length_buffer));
