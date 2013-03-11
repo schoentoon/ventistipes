@@ -24,4 +24,11 @@ int string_equals(char* str1, char* str2);
  */
 char* stripOutEmailAddress(char* line);
 
+/** Return if line contains c
+ * @param line String to check for a certain character
+ * @param c the character to check for
+ * @return 1 if line does contain c
+ */
+int string_contains(char* line, char c);
+
 #endif //_STRING_HELPERS_H

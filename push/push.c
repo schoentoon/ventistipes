@@ -19,10 +19,21 @@ void launch_push_queries(char* address, void* context, struct email* email)
   char* query = malloc(output_len);
   strcpy(query, buffer);
   struct push_info* push_info = malloc(sizeof(struct push_info));
-  push_info->subject = malloc(strlen(email->subject));
-  strcpy(push_info->subject, email->subject);
-  push_info->data = malloc(strlen(email->data));
-  strcpy(push_info->data, email->data);
+  if (email->subject) {
+    push_info->subject = malloc(strlen(email->subject));
+    strcpy(push_info->subject, email->subject);
+  } else
+    push_info->subject = NULL;
+  if (email->data) {
+    push_info->data = malloc(strlen(email->data));
+    strcpy(push_info->data, email->data);
+  } else
+    push_info = NULL;
+  if (email->from) {
+    push_info->sender = malloc(strlen(email->from));
+    strcpy(push_info->sender, email->from);
+  } else
+    push_info->sender = NULL;
   push_info->event_base = (struct event_base*) context;
   if (!dns)
     dns = evdns_base_new(push_info->event_base, 1);
@@ -58,5 +69,7 @@ static void push_query_result(PGresult* res, void* context, char* query)
   }
   SAFEFREE(push_info->subject);
   SAFEFREE(push_info->data);
+  SAFEFREE(push_info->sender);
+  SAFEFREE(push_info);
   SAFEFREE(query);
 }

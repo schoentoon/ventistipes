@@ -14,8 +14,7 @@ struct email {
     HEADERS = 0,
     DATA_HEADERS = 1,
     DATA = 2,
-    DATA_LAST_LINE_EMPTY = 3,
-    DATA_DONE = 4
+    DATA_DONE = 3
   } mode;
 };
 

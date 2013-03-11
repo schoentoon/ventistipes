@@ -25,7 +25,8 @@ char* stripOutEmailAddress(char* line)
   int length_needed = 0;
   int start = 0;
   int i;
-  for (i = 0; i < strlen(line); i++) {
+  size_t len = strlen(line);
+  for (i = 0; i < len; i++) {
     if (line[i] == '<') {
       start = i+1;
       length_needed = 1;
@@ -43,4 +44,15 @@ char* stripOutEmailAddress(char* line)
     return output;
   }
   return NULL;
+}
+
+int string_contains(char* line, char c)
+{
+  int i;
+  size_t len = strlen(line);
+  for (i = 0; i < len; i++) {
+    if (line[i] == c)
+      return 1;
+  }
+  return 0;
 }

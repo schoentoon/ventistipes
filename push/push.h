@@ -10,6 +10,7 @@ struct evdns_base* dns;
 struct push_info {
   char* subject;
   char* data;
+  char* sender;
   struct event_base* event_base;
 };
 

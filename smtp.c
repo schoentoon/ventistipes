@@ -68,7 +68,7 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
   size_t len;
   char* line = evbuffer_readln(buffer, &len, EVBUFFER_EOL_CRLF);
   while (line) {
-    if (email->mode != DATA && email->mode != DATA_LAST_LINE_EMPTY) {
+    if (email->mode != DATA) {
       if (string_equals(line, "QUIT"))
         bufferevent_write(bev, _221_BYE, strlen(_221_BYE));
       else if (string_equals(line, "RSET"))
@@ -101,22 +101,21 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
     case DATA_HEADERS:
       if (strlen(line) == 0)
         email->mode = DATA;
-      else if (string_startsWith(line, "Subject: "))
+      else if (!string_contains(line, ':')) {
+        email->mode = DATA;
+        email_append_data(email, line);
+      } else if (string_startsWith(line, "Subject: "))
         email_set_subject(email, line);
       break;
     case DATA:
-      if (strlen(line) > 0)
-        email_append_data(email, line);
-      else
-        email->mode = DATA_LAST_LINE_EMPTY;
-      break;
-    case DATA_LAST_LINE_EMPTY:
-      if (string_equals(line, ".")) {
-        bufferevent_write(bev, _250_OK, strlen(_250_OK));
-        email->mode = DATA_DONE;
-        email_for_each_recipient(email, bufferevent_get_base(bev), launch_push_queries);
-      } else
-        email->mode = DATA;
+      if (strlen(line) > 0) {
+        if (string_equals(line, ".")) {
+          bufferevent_write(bev, _250_OK, strlen(_250_OK));
+          email->mode = DATA_DONE;
+          email_for_each_recipient(email, bufferevent_get_base(bev), launch_push_queries);
+        } else
+          email_append_data(email, line);
+      }
       break;
     default:
       break;

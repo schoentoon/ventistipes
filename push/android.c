@@ -64,7 +64,17 @@ void android_push(struct push_info* push_info, char* push_id, struct event_base*
   bufferevent_write(bev, _CRLF, strlen(_CRLF));
   bufferevent_write(bev, _CONTENT_LENGTH, strlen(_CONTENT_LENGTH));
   char buffer[4096]; //Could be overflowed atm, but then again the data field isn't supposed to be bigger than 4096 bytes..
-  snprintf(buffer, sizeof(buffer), "{\"registration_ids\":[\"%s\"],\"data\":{\"subject\":\"%s\",\"data\":\"%s\"}}", push_id, push_info->subject, push_info->data);
+  sprintf(buffer, "{\"registration_ids\":[\"%s\"],\"data\":{", push_id);
+  if (push_info->subject)
+    sprintf(buffer, "%s\"subject\":\"%s\"", buffer
+                  , push_info->subject);
+  if (push_info->data)
+    sprintf(buffer, "%s%s\"data\":\"%s\"", buffer
+                  , (push_info->subject ? "," : ""), push_info->data);
+  if (push_info->sender)
+    sprintf(buffer, "%s%s\"sender\":\"%s\"", buffer
+                  , ((push_info->subject || push_info->data) ? "," : ""), push_info->sender);
+  sprintf(buffer, "%s}}", buffer);
 #ifdef DEV
   printf("%s\n",buffer);
 #endif //DEV
