@@ -6,3 +6,7 @@ CREATE TABLE push_ids (
     push_id character varying(256) NOT NULL,
     push_type integer
 );
+ALTER TABLE ONLY allowed_in_mail
+    ADD CONSTRAINT allowed_in_mail_pkey PRIMARY KEY (email);
+ALTER TABLE ONLY push_ids
+    ADD CONSTRAINT push_ids_pkey PRIMARY KEY (email, push_id);
