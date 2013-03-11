@@ -77,8 +77,8 @@ static void pq_timer(evutil_socket_t fd, short event, void *arg)
           fprintf(stderr, "%s\n", PQerrorMessage(databasePool[i]->conn));
           PQfinish(databasePool[i]->conn);
           databasePool[i]->conn = NULL;
-        }
-        PQsetnonblocking(databasePool[i]->conn, 1);
+        } else
+          PQsetnonblocking(databasePool[i]->conn, 1);
       } else {
         if (databasePool[i]->queries->sent == 0) {
           PQsendQuery(databasePool[i]->conn, databasePool[i]->queries->query);

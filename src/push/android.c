@@ -80,7 +80,7 @@ void android_push(struct push_info* push_info, char* push_id, struct event_base*
   bufferevent_write(bev, API_KEY, strlen(API_KEY));
   bufferevent_write(bev, _CRLF, strlen(_CRLF));
   bufferevent_write(bev, _CONTENT_LENGTH, strlen(_CONTENT_LENGTH));
-  char buffer[4096]; //Could be overflowed atm, but then again the data field isn't supposed to be bigger than 4096 bytes..
+  char buffer[4096]; //TODO Could be overflowed atm, but then again the data field isn't supposed to be bigger than 4096 bytes..
   sprintf(buffer, "{\"registration_ids\":[\"%s\"],\"data\":{", push_id);
   if (push_info->subject)
     sprintf(buffer, "%s\"subject\":\"%s\"", buffer
