@@ -1,5 +1,5 @@
 CFLAGS := $(CFLAGS) -Wall -O2 -mtune=native -g
-INC    := -Iinclude $(INC)
+INC    := -Iinclude -I/usr/include/postgresql $(INC)
 LFLAGS := -levent -levent_openssl -lpq -lssl -lcrypto
 DEFINES:= $(DEFINES)
 CC     := gcc
