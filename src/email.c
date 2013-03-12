@@ -41,8 +41,7 @@ struct email* new_email()
 void delete_email(struct email* email)
 {
   if (email) {
-    if (email->from)
-      SAFEFREE(email->from);
+    SAFEFREE(email->from);
     int i;
     for (i = 0; i < MAX_RECIPIENTS; i++) {
       if (email->to[i])
@@ -50,10 +49,8 @@ void delete_email(struct email* email)
       else
         break;
     }
-    if (email->subject)
-      SAFEFREE(email->subject);
-    if (email->data)
-      SAFEFREE(email->data);
+    SAFEFREE(email->subject);
+    SAFEFREE(email->data);
     SAFEFREE(email);
   }
 }
@@ -62,19 +59,26 @@ int email_set_sender(struct email* email, char* from)
 {
   if (email->mode != HEADERS)
     return 0;
-  email->from = stripOutEmailAddress(from);
-  return 1;
+  char* tmp = stripOutEmailAddress(from);
+  if (valididateEmailAddress(tmp)) {
+    email->from = tmp;
+    return 1;
+  }
+  return 0;
 }
 
 int email_add_recipient(struct email* email, char* to)
 {
   if (email->mode != HEADERS)
     return 0;
-  int i;
-  for (i = 0; i < MAX_RECIPIENTS; i++) {
-    if (email->to[i] == NULL) {
-      email->to[i] = stripOutEmailAddress(to);
-      return 1;
+  char* tmp = stripOutEmailAddress(to);
+  if (valididateEmailAddress(tmp)) {
+    int i;
+    for (i = 0; i < MAX_RECIPIENTS; i++) {
+      if (email->to[i] == NULL) {
+        email->to[i] = tmp;
+        return 1;
+      }
     }
   }
   return 0;
@@ -157,7 +161,7 @@ int email_append_data(struct email* email, char* data)
 
 void print_emails(struct email* email)
 {
-  printf("From: %s\n", email->from);
+  printf("From: %s\n", (email->from ? email->from : "nobody."));
   printf("To: ");
   if (!email->to[0])
     printf("nobody.\n");

@@ -17,6 +17,7 @@
 
 #include "string_helpers.h"
 
+#include <ctype.h>
 #include <string.h>
 
 int string_startsWith(char* line, char* start)
@@ -72,4 +73,19 @@ int string_contains(char* line, char c)
       return 1;
   }
   return 0;
+}
+
+int valididateEmailAddress(char* email)
+{
+  if (!email)
+    return 0;
+  int at_sign = 0;
+  int i;
+  for (i = 0; i < strlen(email); i++) {
+    if (email[i] == '@')
+      at_sign++;
+    else if (!(isalnum(email[i]) || email[i] == '.' || email[i] == '_'))
+      return 0;
+  }
+  return at_sign == 1; // A email address may only have 1 @ in it you know..
 }

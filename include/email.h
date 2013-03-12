@@ -57,7 +57,7 @@ int email_set_sender(struct email* email, char* from);
  * @param to The raw line we want to parse the email address out of
  * @return 1 if added correctly, 0 if not added
  * this will only occur when there are more than
- * MAX_RECIPIENTS recipients
+ * MAX_RECIPIENTS recipients or if the email isn't valid
  */
 int email_add_recipient(struct email* email, char* to);
 

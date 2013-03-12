@@ -48,4 +48,11 @@ char* stripOutEmailAddress(char* line);
  */
 int string_contains(char* line, char c);
 
+/** Check if this emailaddress contains 1 at sign
+ * and is only made up of letters and/or numbers
+ * @param email The email address to check
+ * @return 1 if it's valid
+ */
+int valididateEmailAddress(char* email);
+
 #endif //_STRING_HELPERS_H
