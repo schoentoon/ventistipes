@@ -25,6 +25,7 @@
 
 #include <event2/listener.h>
 
+#include <ctype.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -78,6 +79,10 @@ static void check_email_to_callback(PGresult* res, void* email, char* query);
 char* create_check_email_from_query(char* email);
 char* create_check_email_to_query(char* email);
 
+int isEmailCharacters(char c) {
+  return (!(isalnum(c) || c == '>' || c == '<' || c == '.' || c == '_' || c == ' ' || c == ':' || c == '@'));
+}
+
 static void smtp_conn_readcb(struct bufferevent *bev, void* args)
 {
   struct evbuffer* buffer = bufferevent_get_input(bev);
@@ -99,35 +104,39 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
           bufferevent_write(bev, _250_OK, strlen(_250_OK));
         }
       } else if (email->ehlo) {
-        if (string_startsWith(line, "MAIL FROM:<")) {
-          char* addr = stripOutEmailAddress(line);
-          if (addr) {
-            char* query = create_check_email_from_query(addr);
-            if (query)
-              databaseQuery(query, check_email_from_callback, email);
-            else
+        if (!forEachCharacter(line, isEmailCharacters)) {
+          if (string_startsWith(line, "MAIL FROM:<")) {
+            char* addr = stripOutEmailAddress(line);
+            if (addr) {
+              char* query = create_check_email_from_query(addr);
+              if (query)
+                databaseQuery(query, check_email_from_callback, email);
+              else
+                bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+              SAFEFREE(addr);
+            } else
               bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
-            SAFEFREE(addr);
+          } else if (string_startsWith(line, "RCPT TO:<")) {
+            char* addr = stripOutEmailAddress(line);
+            if (addr) {
+              char* query = create_check_email_to_query(addr);
+              if (query)
+                databaseQuery(query, check_email_to_callback, email);
+              else
+                bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+              SAFEFREE(addr);
+            } else
+              bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+          } else if (string_equals(line, "DATA")) {
+            if (email_has_recipients(email)) {
+              bufferevent_write(bev, _354_GO_AHEAD, strlen(_354_GO_AHEAD));
+              email->mode = DATA_HEADERS;
+            } else
+              bufferevent_write(bev, _503_BAD_SEQUENCE, strlen(_503_BAD_SEQUENCE));
           } else
             bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
-        } else if (string_startsWith(line, "RCPT TO:<")) {
-          char* addr = stripOutEmailAddress(line);
-          if (addr) {
-            char* query = create_check_email_to_query(addr);
-            if (query)
-              databaseQuery(query, check_email_to_callback, email);
-            else
-              bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
-            SAFEFREE(addr);
-          } else
-            bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
-        } else if (string_equals(line, "DATA")) {
-          if (email_has_recipients(email)) {
-            bufferevent_write(bev, _354_GO_AHEAD, strlen(_354_GO_AHEAD));
-            email->mode = DATA_HEADERS;
-          } else
-            bufferevent_write(bev, _503_BAD_SEQUENCE, strlen(_503_BAD_SEQUENCE));
-        }
+        } else
+          bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
       }
       break;
     case DATA_HEADERS:

@@ -41,12 +41,12 @@ int string_equals(char* str1, char* str2)
 char* stripOutEmailAddress(char* line)
 {
   int length_needed = 0;
-  int start = 0;
+  int start = -1;
   int i;
   size_t len = strlen(line);
   for (i = 0; i < len; i++) {
-    if (line[i] == '<') {
-      start = i+1;
+    if (line[i] == '<' && start == -1) {
+      start = i + 1;
       length_needed = 1;
     } else if (line[i] == '>') {
       length_needed--;
@@ -54,10 +54,10 @@ char* stripOutEmailAddress(char* line)
     } else if (length_needed)
       length_needed++;
   }
-  if (length_needed) {
+  if (length_needed && start) {
     char* output = malloc(length_needed);
     for (i = 0; i < length_needed; i++)
-      output[i] = line[start+i];
+      output[i] = line[start + i];
     output[length_needed] = '\0';
     return output;
   }
@@ -88,4 +88,17 @@ int valididateEmailAddress(char* email)
       return 0;
   }
   return at_sign == 1; // A email address may only have 1 @ in it you know..
+}
+
+int forEachCharacter(char* input, int (*function)(char input))
+{
+  if (!input || !function)
+    return 0;
+  int i;
+  for (i = 0; i < strlen(input); i++) {
+    int output = function(input[i]);
+    if (output)
+      return output;
+  }
+  return 0;
 }

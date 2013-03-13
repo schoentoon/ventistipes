@@ -55,4 +55,12 @@ int string_contains(char* line, char c);
  */
 int valididateEmailAddress(char* email);
 
+/** Call a function for each character in a string
+ * in case it exits with non-zero return that value
+ * @param input The input string
+ * @param function The function to call for each character
+ * @return Fully depends on function
+ */
+int forEachCharacter(char* input, int (*function)(char input));
+
 #endif //_STRING_HELPERS_H
