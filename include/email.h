@@ -47,14 +47,14 @@ void delete_email(struct email* email);
 
 /** Set our sender
  * @param email The email structure we want to have this sender
- * @param from The raw line we want to parse the email address out of
+ * @param from The sender's email address
  * @return 1 in case we set it correctly, else we'll return 0
  */
 int email_set_sender(struct email* email, char* from);
 
 /** Add a recipient to our email structure
  * @param email The email structure we want to have this recipient
- * @param to The raw line we want to parse the email address out of
+ * @param to The recipient's email address
  * @return 1 if added correctly, 0 if not added
  * this will only occur when there are more than
  * MAX_RECIPIENTS recipients or if the email isn't valid

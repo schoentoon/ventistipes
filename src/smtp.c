@@ -100,14 +100,26 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
         }
       } else if (email->ehlo) {
         if (string_startsWith(line, "MAIL FROM:<")) {
-          if (email_set_sender(email, line))
-            databaseQuery(create_check_email_from_query(email->from), check_email_from_callback, email);
-          else
+          char* addr = stripOutEmailAddress(line);
+          if (addr) {
+            char* query = create_check_email_from_query(addr);
+            if (query)
+              databaseQuery(query, check_email_from_callback, email);
+            else
+              bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+            SAFEFREE(addr);
+          } else
             bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
         } else if (string_startsWith(line, "RCPT TO:<")) {
-          if (email_add_recipient(email, line))
-            databaseQuery(create_check_email_to_query(email_get_last_recipient(email)), check_email_to_callback, email);
-          else
+          char* addr = stripOutEmailAddress(line);
+          if (addr) {
+            char* query = create_check_email_to_query(addr);
+            if (query)
+              databaseQuery(query, check_email_to_callback, email);
+            else
+              bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+            SAFEFREE(addr);
+          } else
             bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
         } else if (string_equals(line, "DATA")) {
           if (email_has_recipients(email)) {
@@ -186,12 +198,22 @@ static void check_email_from_callback(PGresult* res, void* context, char* query)
 #ifdef DEV
   printf("Query %s returned with %d rows.\n", query, PQntuples(res));
 #endif
-  if (PQntuples(res) > 0)
-    bufferevent_write(bev, _250_OK, strlen(_250_OK));
-  else {
+  if (PQntuples(res) > 0) {
+    size_t len = strlen(query);
+    size_t email_len = len - 45 - 2;
+    char*  addr = malloc(email_len);
+    int i;
+    for (i = 0; i <= email_len; i++)
+      addr[i] = query[i + 45];
+    addr[email_len] = '\0';
+    if (email_set_sender(email, addr))
+      bufferevent_write(bev, _250_OK, strlen(_250_OK));
+    else {
+      SAFEFREE(addr);
+      bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+    }
+  } else
     bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
-    SAFEFREE(email->from);
-  }
   SAFEFREE(query);
 }
 
@@ -202,26 +224,29 @@ static void check_email_to_callback(PGresult* res, void* context, char* query)
 #ifdef DEV
   printf("Query %s returned with %d rows.\n", query, PQntuples(res));
 #endif
-  if (PQntuples(res) > 0)
-    bufferevent_write(bev, _250_OK, strlen(_250_OK));
-  else {
-    bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+  if (PQntuples(res) > 0) {
     size_t len = strlen(query);
-    size_t email_len = len - 38 -2;
-    char addr[email_len];
+    size_t email_len = len - 38 - 2;
+    char* addr = malloc(email_len);
     int i;
-    for (i = 0; i < email_len; i++)
+    for (i = 0; i <= email_len; i++)
       addr[i] = query[i + 38];
     addr[email_len] = '\0';
-    char* addr_p = malloc(email_len);
-    email_remove_email_from_recipients(email, strcpy(addr_p, addr));
-    SAFEFREE(addr_p);
-  }
+    if (email_add_recipient(email, addr))
+      bufferevent_write(bev, _250_OK, strlen(_250_OK));
+    else {
+      SAFEFREE(addr);
+      bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+    }
+  } else
+    bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
   SAFEFREE(query);
 }
 
 char* create_check_email_from_query(char* email)
 { /* SELECT 1 FROM allowed_in_mail WHERE email = 'email@addre.ss'; */
+  if (!email || !valididateEmailAddress(email))
+    return NULL;
   size_t email_len = strlen(email);
   size_t output_len = email_len + 45 + 2 + 1;
   char buffer[output_len];
@@ -232,7 +257,7 @@ char* create_check_email_from_query(char* email)
 
 char* create_check_email_to_query(char* email)
 { /* SELECT 1 FROM push_ids WHERE email = 'email@addre.ss'; */
-  if (!email)
+  if (!email || !valididateEmailAddress(email))
     return NULL;
   size_t email_len = strlen(email);
   size_t output_len = email_len + 38 + 2 + 1;

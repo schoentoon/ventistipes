@@ -59,9 +59,8 @@ int email_set_sender(struct email* email, char* from)
 {
   if (email->mode != HEADERS)
     return 0;
-  char* tmp = stripOutEmailAddress(from);
-  if (valididateEmailAddress(tmp)) {
-    email->from = tmp;
+  if (valididateEmailAddress(from)) {
+    email->from = from;
     return 1;
   }
   return 0;
@@ -71,12 +70,11 @@ int email_add_recipient(struct email* email, char* to)
 {
   if (email->mode != HEADERS)
     return 0;
-  char* tmp = stripOutEmailAddress(to);
-  if (valididateEmailAddress(tmp)) {
+  if (valididateEmailAddress(to)) {
     int i;
     for (i = 0; i < MAX_RECIPIENTS; i++) {
       if (email->to[i] == NULL) {
-        email->to[i] = tmp;
+        email->to[i] = to;
         return 1;
       }
     }
