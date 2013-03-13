@@ -191,6 +191,9 @@ static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
   bufferevent_write(bev, _220_HELLO, strlen(_220_HELLO));
 }
 
+#define FROM_QUERY_START 45
+#define FROM_QUERY_END 10
+
 static void check_email_from_callback(PGresult* res, void* context, char* query)
 {
   struct email* email = (struct email*) context;
@@ -198,13 +201,13 @@ static void check_email_from_callback(PGresult* res, void* context, char* query)
 #ifdef DEV
   printf("Query %s returned with %d rows.\n", query, PQntuples(res));
 #endif
-  if (PQntuples(res) > 0) {
+  if (PQntuples(res) == 1) {
     size_t len = strlen(query);
-    size_t email_len = len - 45 - 2;
+    size_t email_len = len - FROM_QUERY_START - FROM_QUERY_END;
     char*  addr = malloc(email_len);
     int i;
     for (i = 0; i <= email_len; i++)
-      addr[i] = query[i + 45];
+      addr[i] = query[i + FROM_QUERY_START];
     addr[email_len] = '\0';
     if (email_set_sender(email, addr))
       bufferevent_write(bev, _250_OK, strlen(_250_OK));
@@ -217,6 +220,9 @@ static void check_email_from_callback(PGresult* res, void* context, char* query)
   SAFEFREE(query);
 }
 
+#define TO_QUERY_START 38
+#define TO_QUERY_END 10
+
 static void check_email_to_callback(PGresult* res, void* context, char* query)
 {
   struct email* email = (struct email*) context;
@@ -224,13 +230,13 @@ static void check_email_to_callback(PGresult* res, void* context, char* query)
 #ifdef DEV
   printf("Query %s returned with %d rows.\n", query, PQntuples(res));
 #endif
-  if (PQntuples(res) > 0) {
+  if (PQntuples(res) == 1) {
     size_t len = strlen(query);
-    size_t email_len = len - 38 - 2;
+    size_t email_len = len - TO_QUERY_START - TO_QUERY_END;
     char* addr = malloc(email_len);
     int i;
     for (i = 0; i <= email_len; i++)
-      addr[i] = query[i + 38];
+      addr[i] = query[i + TO_QUERY_START];
     addr[email_len] = '\0';
     if (email_add_recipient(email, addr))
       bufferevent_write(bev, _250_OK, strlen(_250_OK));
@@ -248,9 +254,9 @@ char* create_check_email_from_query(char* email)
   if (!email || !valididateEmailAddress(email))
     return NULL;
   size_t email_len = strlen(email);
-  size_t output_len = email_len + 45 + 2 + 1;
+  size_t output_len = email_len + FROM_QUERY_START + FROM_QUERY_END + 1;
   char buffer[output_len];
-  snprintf(buffer, sizeof(buffer), "SELECT 1 FROM allowed_in_mail WHERE email = '%s';", email);
+  snprintf(buffer, sizeof(buffer), "SELECT 1 FROM allowed_in_mail WHERE email = '%s' LIMIT 1;", email);
   char* output = malloc(output_len);
   return strcpy(output, buffer);
 }
@@ -260,9 +266,9 @@ char* create_check_email_to_query(char* email)
   if (!email || !valididateEmailAddress(email))
     return NULL;
   size_t email_len = strlen(email);
-  size_t output_len = email_len + 38 + 2 + 1;
+  size_t output_len = email_len + TO_QUERY_START + TO_QUERY_END + 1;
   char buffer[output_len];
-  snprintf(buffer, sizeof(buffer), "SELECT 1 FROM push_ids WHERE email = '%s';", email);
+  snprintf(buffer, sizeof(buffer), "SELECT 1 FROM push_ids WHERE email = '%s' LIMIT 1;", email);
   char* output = malloc(output_len);
   return strcpy(output, buffer);
 }
