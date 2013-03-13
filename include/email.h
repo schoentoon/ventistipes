@@ -21,7 +21,7 @@
 #define MAX_RECIPIENTS 100
 
 struct email {
-  int ehlo;
+  char ehlo;
   char* from;
   char* to[MAX_RECIPIENTS];
   char* subject;
