@@ -80,7 +80,7 @@ char* create_check_email_from_query(char* email);
 char* create_check_email_to_query(char* email);
 
 int isEmailCharacters(char c) {
-  return (!(isalnum(c) || c == '>' || c == '<' || c == '.' || c == '_' || c == ' ' || c == ':' || c == '@'));
+  return (!(isalnum(c) || c == '>' || c == '<' || c == '.' || c == '_' || c == ' ' || c == ':' || c == '@' || c == '-'));
 }
 
 static void smtp_conn_readcb(struct bufferevent *bev, void* args)

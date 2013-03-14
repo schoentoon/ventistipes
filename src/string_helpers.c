@@ -84,7 +84,7 @@ int valididateEmailAddress(char* email)
   for (i = 0; i < strlen(email); i++) {
     if (email[i] == '@')
       at_sign++;
-    else if (!(isalnum(email[i]) || email[i] == '.' || email[i] == '_'))
+    else if (!(isalnum(email[i]) || email[i] == '.' || email[i] == '_' || email[i] == '-'))
       return 0;
   }
   return at_sign == 1; // A email address may only have 1 @ in it you know..
