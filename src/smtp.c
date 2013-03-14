@@ -136,7 +136,7 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
           } else
             bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
         } else
-          bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
+          bufferevent_write(bev, _502_NOT_SUPPORTED, strlen(_502_NOT_SUPPORTED));
       }
       break;
     case DATA_HEADERS:
