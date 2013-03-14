@@ -1,0 +1,197 @@
+\hypertarget{email_8c}{\section{src/email.c File Reference}
+\label{email_8c}\index{src/email.\-c@{src/email.\-c}}
+}
+{\ttfamily \#include \char`\"{}email.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}safefree.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}string\-\_\-helpers.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+Include dependency graph for email.\-c\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{email_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structemail}{email} $\ast$ \hyperlink{email_8c_a92d36df971c6ea4b807f191461774628}{new\-\_\-email} ()
+\item 
+void \hyperlink{email_8c_a5227fadfd1014417c4ce6bfc4a925592}{delete\-\_\-email} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email})
+\item 
+int \hyperlink{email_8c_a21caf89afa30b60df1eec81bfb48e6d0}{email\-\_\-set\-\_\-sender} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email}, char $\ast$from)
+\item 
+int \hyperlink{email_8c_a634d99bdaba585890305ea9f86312c09}{email\-\_\-add\-\_\-recipient} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email}, char $\ast$to)
+\item 
+int \hyperlink{email_8c_a46ed54490f60eccc2513cae45ef8adfb}{email\-\_\-has\-\_\-recipients} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email})
+\item 
+char $\ast$ \hyperlink{email_8c_a8b8b8be04443bcbad35d3100929e2a8f}{email\-\_\-get\-\_\-last\-\_\-recipient} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email})
+\item 
+int \hyperlink{email_8c_acf2b3d9d17180be215d06b5267bb5042}{email\-\_\-remove\-\_\-email\-\_\-from\-\_\-recipients} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email}, char $\ast$addr)
+\item 
+int \hyperlink{email_8c_a164bbbf7611e6a4f842a9d9699d756a1}{email\-\_\-set\-\_\-subject} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email}, char $\ast$line)
+\item 
+void \hyperlink{email_8c_a39795abc038b09b975b2dfaee3067dae}{email\-\_\-for\-\_\-each\-\_\-recipient} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email}, void $\ast$context, void($\ast$execute)(char $\ast$address, void $\ast$context, struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email}))
+\item 
+int \hyperlink{email_8c_a179442b2783a7258bfa8e5f69e758a58}{email\-\_\-append\-\_\-data} (struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email}, char $\ast$data)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{email_8c_a5227fadfd1014417c4ce6bfc4a925592}{\index{email.\-c@{email.\-c}!delete\-\_\-email@{delete\-\_\-email}}
+\index{delete\-\_\-email@{delete\-\_\-email}!email.c@{email.\-c}}
+\subsubsection[{delete\-\_\-email}]{\setlength{\rightskip}{0pt plus 5cm}void delete\-\_\-email (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email}
+\end{DoxyParamCaption}
+)}}\label{email_8c_a5227fadfd1014417c4ce6bfc4a925592}
+Clean up this email structure 
+\begin{DoxyParams}{Parameters}
+{\em email} & The email structure we want to clean up \\
+\hline
+\end{DoxyParams}
+\hypertarget{email_8c_a634d99bdaba585890305ea9f86312c09}{\index{email.\-c@{email.\-c}!email\-\_\-add\-\_\-recipient@{email\-\_\-add\-\_\-recipient}}
+\index{email\-\_\-add\-\_\-recipient@{email\-\_\-add\-\_\-recipient}!email.c@{email.\-c}}
+\subsubsection[{email\-\_\-add\-\_\-recipient}]{\setlength{\rightskip}{0pt plus 5cm}int email\-\_\-add\-\_\-recipient (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email, }
+\item[{char $\ast$}]{to}
+\end{DoxyParamCaption}
+)}}\label{email_8c_a634d99bdaba585890305ea9f86312c09}
+Add a recipient to our email structure 
+\begin{DoxyParams}{Parameters}
+{\em email} & The email structure we want to have this recipient \\
+\hline
+{\em to} & The recipient's email address \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if added correctly, 0 if not added this will only occur when there are more than M\-A\-X\-\_\-\-R\-E\-C\-I\-P\-I\-E\-N\-T\-S recipients or if the email isn't valid 
+\end{DoxyReturn}
+\hypertarget{email_8c_a179442b2783a7258bfa8e5f69e758a58}{\index{email.\-c@{email.\-c}!email\-\_\-append\-\_\-data@{email\-\_\-append\-\_\-data}}
+\index{email\-\_\-append\-\_\-data@{email\-\_\-append\-\_\-data}!email.c@{email.\-c}}
+\subsubsection[{email\-\_\-append\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}int email\-\_\-append\-\_\-data (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email, }
+\item[{char $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{email_8c_a179442b2783a7258bfa8e5f69e758a58}
+Parse a raw line to 'append' it to the data field in email 
+\begin{DoxyParams}{Parameters}
+{\em email} & The email structure we want to have this data \\
+\hline
+{\em data} & The data we want to append \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 in case we're in the right mode, else it'll return 0 
+\end{DoxyReturn}
+\hypertarget{email_8c_a39795abc038b09b975b2dfaee3067dae}{\index{email.\-c@{email.\-c}!email\-\_\-for\-\_\-each\-\_\-recipient@{email\-\_\-for\-\_\-each\-\_\-recipient}}
+\index{email\-\_\-for\-\_\-each\-\_\-recipient@{email\-\_\-for\-\_\-each\-\_\-recipient}!email.c@{email.\-c}}
+\subsubsection[{email\-\_\-for\-\_\-each\-\_\-recipient}]{\setlength{\rightskip}{0pt plus 5cm}void email\-\_\-for\-\_\-each\-\_\-recipient (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email, }
+\item[{void $\ast$}]{context, }
+\item[{void($\ast$)(char $\ast$address, void $\ast$context, struct {\bf email} $\ast${\bf email})}]{execute}
+\end{DoxyParamCaption}
+)}}\label{email_8c_a39795abc038b09b975b2dfaee3067dae}
+Execute this function pointer for each recipient 
+\begin{DoxyParams}{Parameters}
+{\em email} & The email structure to use for the recipients \\
+\hline
+{\em context} & Void pointer to pass to the function pointer \\
+\hline
+{\em execute} & The function pointer to execute for each recipient \\
+\hline
+\end{DoxyParams}
+\hypertarget{email_8c_a8b8b8be04443bcbad35d3100929e2a8f}{\index{email.\-c@{email.\-c}!email\-\_\-get\-\_\-last\-\_\-recipient@{email\-\_\-get\-\_\-last\-\_\-recipient}}
+\index{email\-\_\-get\-\_\-last\-\_\-recipient@{email\-\_\-get\-\_\-last\-\_\-recipient}!email.c@{email.\-c}}
+\subsubsection[{email\-\_\-get\-\_\-last\-\_\-recipient}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ email\-\_\-get\-\_\-last\-\_\-recipient (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email}
+\end{DoxyParamCaption}
+)}}\label{email_8c_a8b8b8be04443bcbad35d3100929e2a8f}
+Get the last recipient \begin{DoxyReturn}{Returns}
+Returns the last recipient in the to array returns N\-U\-L\-L if there are no recipients 
+\end{DoxyReturn}
+\hypertarget{email_8c_a46ed54490f60eccc2513cae45ef8adfb}{\index{email.\-c@{email.\-c}!email\-\_\-has\-\_\-recipients@{email\-\_\-has\-\_\-recipients}}
+\index{email\-\_\-has\-\_\-recipients@{email\-\_\-has\-\_\-recipients}!email.c@{email.\-c}}
+\subsubsection[{email\-\_\-has\-\_\-recipients}]{\setlength{\rightskip}{0pt plus 5cm}int email\-\_\-has\-\_\-recipients (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email}
+\end{DoxyParamCaption}
+)}}\label{email_8c_a46ed54490f60eccc2513cae45ef8adfb}
+Simple check if the email structure has the from and to field filled in. 
+\begin{DoxyParams}{Parameters}
+{\em email} & The email structure we want to check for recipients \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+If it has both the from and at least one recipient it'll return 1, else it'll return 0 
+\end{DoxyReturn}
+\hypertarget{email_8c_acf2b3d9d17180be215d06b5267bb5042}{\index{email.\-c@{email.\-c}!email\-\_\-remove\-\_\-email\-\_\-from\-\_\-recipients@{email\-\_\-remove\-\_\-email\-\_\-from\-\_\-recipients}}
+\index{email\-\_\-remove\-\_\-email\-\_\-from\-\_\-recipients@{email\-\_\-remove\-\_\-email\-\_\-from\-\_\-recipients}!email.c@{email.\-c}}
+\subsubsection[{email\-\_\-remove\-\_\-email\-\_\-from\-\_\-recipients}]{\setlength{\rightskip}{0pt plus 5cm}int email\-\_\-remove\-\_\-email\-\_\-from\-\_\-recipients (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email, }
+\item[{char $\ast$}]{addr}
+\end{DoxyParamCaption}
+)}}\label{email_8c_acf2b3d9d17180be215d06b5267bb5042}
+Remove an email address from the mail structure 
+\begin{DoxyParams}{Parameters}
+{\em email} & The structure to remove an address from \\
+\hline
+{\em addr} & T\-He address to remove \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 in case there was something deleted, else it'll return 0 
+\end{DoxyReturn}
+\hypertarget{email_8c_a21caf89afa30b60df1eec81bfb48e6d0}{\index{email.\-c@{email.\-c}!email\-\_\-set\-\_\-sender@{email\-\_\-set\-\_\-sender}}
+\index{email\-\_\-set\-\_\-sender@{email\-\_\-set\-\_\-sender}!email.c@{email.\-c}}
+\subsubsection[{email\-\_\-set\-\_\-sender}]{\setlength{\rightskip}{0pt plus 5cm}int email\-\_\-set\-\_\-sender (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email, }
+\item[{char $\ast$}]{from}
+\end{DoxyParamCaption}
+)}}\label{email_8c_a21caf89afa30b60df1eec81bfb48e6d0}
+Set our sender 
+\begin{DoxyParams}{Parameters}
+{\em email} & The email structure we want to have this sender \\
+\hline
+{\em from} & The sender's email address \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 in case we set it correctly, else we'll return 0 
+\end{DoxyReturn}
+\hypertarget{email_8c_a164bbbf7611e6a4f842a9d9699d756a1}{\index{email.\-c@{email.\-c}!email\-\_\-set\-\_\-subject@{email\-\_\-set\-\_\-subject}}
+\index{email\-\_\-set\-\_\-subject@{email\-\_\-set\-\_\-subject}!email.c@{email.\-c}}
+\subsubsection[{email\-\_\-set\-\_\-subject}]{\setlength{\rightskip}{0pt plus 5cm}int email\-\_\-set\-\_\-subject (
+\begin{DoxyParamCaption}
+\item[{struct {\bf email} $\ast$}]{email, }
+\item[{char $\ast$}]{line}
+\end{DoxyParamCaption}
+)}}\label{email_8c_a164bbbf7611e6a4f842a9d9699d756a1}
+Parse the subject and set it to the email structure 
+\begin{DoxyParams}{Parameters}
+{\em email} & The email structure we want to have the subject \\
+\hline
+{\em line} & The raw smtp line to parse for the subject \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 in case there is a subject set, else it'll return 0 
+\end{DoxyReturn}
+\hypertarget{email_8c_a92d36df971c6ea4b807f191461774628}{\index{email.\-c@{email.\-c}!new\-\_\-email@{new\-\_\-email}}
+\index{new\-\_\-email@{new\-\_\-email}!email.c@{email.\-c}}
+\subsubsection[{new\-\_\-email}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf email}$\ast$ new\-\_\-email (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [read]}}}\label{email_8c_a92d36df971c6ea4b807f191461774628}
+Create a new email structure and return this \begin{DoxyReturn}{Returns}
+a new email structure 
+\end{DoxyReturn}

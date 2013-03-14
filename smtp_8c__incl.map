@@ -1,0 +1,10 @@
+<map id="src/smtp.c" name="src/smtp.c">
+<area shape="rect" id="node3" href="$smtp_8h.html" title="smtp.h" alt="" coords="6,80,68,107"/>
+<area shape="rect" id="node7" href="$email_8h.html" title="email.h" alt="" coords="267,155,331,181"/>
+<area shape="rect" id="node9" href="$macros_8h.html" title="macros.h" alt="" coords="93,80,168,107"/>
+<area shape="rect" id="node13" href="$safefree_8h.html" title="safefree.h" alt="" coords="295,80,375,107"/>
+<area shape="rect" id="node15" href="$push_8h.html" title="push/push.h" alt="" coords="399,80,492,107"/>
+<area shape="rect" id="node20" href="$string__helpers_8h.html" title="string_helpers.h" alt="" coords="516,80,631,107"/>
+<area shape="rect" id="node35" href="$postgres_8h.html" title="postgres.h" alt="" coords="1244,80,1327,107"/>
+<area shape="rect" id="node37" href="$dbinfo_8h.html" title="config/dbinfo.h" alt="" coords="1347,155,1453,181"/>
+</map>

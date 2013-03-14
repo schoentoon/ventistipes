@@ -1,0 +1,113 @@
+\hypertarget{smtp_8c}{\section{src/smtp.c File Reference}
+\label{smtp_8c}\index{src/smtp.\-c@{src/smtp.\-c}}
+}
+{\ttfamily \#include \char`\"{}smtp.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}email.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}macros.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}safefree.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}push/push.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}string\-\_\-helpers.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$event2/listener.\-h$>$}\\*
+{\ttfamily \#include $<$ctype.\-h$>$}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$fcntl.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}postgres.\-h\char`\"{}}\\*
+Include dependency graph for smtp.\-c\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{smtp_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{smtp_8c_a36a3eeada74bd9dc4bf4e95ff8d2c8e8}{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T}~45
+\item 
+\#define \hyperlink{smtp_8c_abb57f9d72e6456d89e85581dba4ef84a}{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D}~10
+\item 
+\#define \hyperlink{smtp_8c_a747c9399c82c88a86663d09ebce6f5a3}{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T}~38
+\item 
+\#define \hyperlink{smtp_8c_a1f8c2f1b27052fa6e8adf07b7375801d}{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D}~10
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{smtp_8c_a11d628714b4cd9cf45c5726d1093410e}{init\-Mail\-Listener} (struct event\-\_\-base $\ast$event\-\_\-base)
+\item 
+void \hyperlink{smtp_8c_a7a834543fbece476c2fed45df76822c0}{close\-Mail\-Listener} ()
+\item 
+char $\ast$ \hyperlink{smtp_8c_ab63f83e9df29bdad3881cb2c3aa03724}{create\-\_\-check\-\_\-email\-\_\-from\-\_\-query} (char $\ast$\hyperlink{structemail}{email})
+\item 
+char $\ast$ \hyperlink{smtp_8c_ab1566ddf190846a916c1295fe5ee8f14}{create\-\_\-check\-\_\-email\-\_\-to\-\_\-query} (char $\ast$\hyperlink{structemail}{email})
+\item 
+int \hyperlink{smtp_8c_a91ed65212973d3dc30e865bd324c50f5}{is\-Email\-Characters} (char c)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct evconnlistener $\ast$ \hyperlink{smtp_8c_a0fb084a5ef4d5874db805c2df1375d7b}{listener}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{smtp_8c_abb57f9d72e6456d89e85581dba4ef84a}{\index{smtp.\-c@{smtp.\-c}!F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D@{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D}}
+\index{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D@{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D}!smtp.c@{smtp.\-c}}
+\subsubsection[{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D~10}}\label{smtp_8c_abb57f9d72e6456d89e85581dba4ef84a}
+\hypertarget{smtp_8c_a36a3eeada74bd9dc4bf4e95ff8d2c8e8}{\index{smtp.\-c@{smtp.\-c}!F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T@{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T}}
+\index{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T@{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T}!smtp.c@{smtp.\-c}}
+\subsubsection[{F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-R\-O\-M\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T~45}}\label{smtp_8c_a36a3eeada74bd9dc4bf4e95ff8d2c8e8}
+\hypertarget{smtp_8c_a1f8c2f1b27052fa6e8adf07b7375801d}{\index{smtp.\-c@{smtp.\-c}!T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D@{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D}}
+\index{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D@{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D}!smtp.c@{smtp.\-c}}
+\subsubsection[{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-E\-N\-D~10}}\label{smtp_8c_a1f8c2f1b27052fa6e8adf07b7375801d}
+\hypertarget{smtp_8c_a747c9399c82c88a86663d09ebce6f5a3}{\index{smtp.\-c@{smtp.\-c}!T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T@{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T}}
+\index{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T@{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T}!smtp.c@{smtp.\-c}}
+\subsubsection[{T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\-O\-\_\-\-Q\-U\-E\-R\-Y\-\_\-\-S\-T\-A\-R\-T~38}}\label{smtp_8c_a747c9399c82c88a86663d09ebce6f5a3}
+
+
+\subsection{Function Documentation}
+\hypertarget{smtp_8c_a7a834543fbece476c2fed45df76822c0}{\index{smtp.\-c@{smtp.\-c}!close\-Mail\-Listener@{close\-Mail\-Listener}}
+\index{close\-Mail\-Listener@{close\-Mail\-Listener}!smtp.c@{smtp.\-c}}
+\subsubsection[{close\-Mail\-Listener}]{\setlength{\rightskip}{0pt plus 5cm}void close\-Mail\-Listener (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{smtp_8c_a7a834543fbece476c2fed45df76822c0}
+\hypertarget{smtp_8c_ab63f83e9df29bdad3881cb2c3aa03724}{\index{smtp.\-c@{smtp.\-c}!create\-\_\-check\-\_\-email\-\_\-from\-\_\-query@{create\-\_\-check\-\_\-email\-\_\-from\-\_\-query}}
+\index{create\-\_\-check\-\_\-email\-\_\-from\-\_\-query@{create\-\_\-check\-\_\-email\-\_\-from\-\_\-query}!smtp.c@{smtp.\-c}}
+\subsubsection[{create\-\_\-check\-\_\-email\-\_\-from\-\_\-query}]{\setlength{\rightskip}{0pt plus 5cm}char $\ast$ create\-\_\-check\-\_\-email\-\_\-from\-\_\-query (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{email}
+\end{DoxyParamCaption}
+)}}\label{smtp_8c_ab63f83e9df29bdad3881cb2c3aa03724}
+\hypertarget{smtp_8c_ab1566ddf190846a916c1295fe5ee8f14}{\index{smtp.\-c@{smtp.\-c}!create\-\_\-check\-\_\-email\-\_\-to\-\_\-query@{create\-\_\-check\-\_\-email\-\_\-to\-\_\-query}}
+\index{create\-\_\-check\-\_\-email\-\_\-to\-\_\-query@{create\-\_\-check\-\_\-email\-\_\-to\-\_\-query}!smtp.c@{smtp.\-c}}
+\subsubsection[{create\-\_\-check\-\_\-email\-\_\-to\-\_\-query}]{\setlength{\rightskip}{0pt plus 5cm}char $\ast$ create\-\_\-check\-\_\-email\-\_\-to\-\_\-query (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{email}
+\end{DoxyParamCaption}
+)}}\label{smtp_8c_ab1566ddf190846a916c1295fe5ee8f14}
+\hypertarget{smtp_8c_a11d628714b4cd9cf45c5726d1093410e}{\index{smtp.\-c@{smtp.\-c}!init\-Mail\-Listener@{init\-Mail\-Listener}}
+\index{init\-Mail\-Listener@{init\-Mail\-Listener}!smtp.c@{smtp.\-c}}
+\subsubsection[{init\-Mail\-Listener}]{\setlength{\rightskip}{0pt plus 5cm}int init\-Mail\-Listener (
+\begin{DoxyParamCaption}
+\item[{struct event\-\_\-base $\ast$}]{event\-\_\-base}
+\end{DoxyParamCaption}
+)}}\label{smtp_8c_a11d628714b4cd9cf45c5726d1093410e}
+\hypertarget{smtp_8c_a91ed65212973d3dc30e865bd324c50f5}{\index{smtp.\-c@{smtp.\-c}!is\-Email\-Characters@{is\-Email\-Characters}}
+\index{is\-Email\-Characters@{is\-Email\-Characters}!smtp.c@{smtp.\-c}}
+\subsubsection[{is\-Email\-Characters}]{\setlength{\rightskip}{0pt plus 5cm}int is\-Email\-Characters (
+\begin{DoxyParamCaption}
+\item[{char}]{c}
+\end{DoxyParamCaption}
+)}}\label{smtp_8c_a91ed65212973d3dc30e865bd324c50f5}
+
+
+\subsection{Variable Documentation}
+\hypertarget{smtp_8c_a0fb084a5ef4d5874db805c2df1375d7b}{\index{smtp.\-c@{smtp.\-c}!listener@{listener}}
+\index{listener@{listener}!smtp.c@{smtp.\-c}}
+\subsubsection[{listener}]{\setlength{\rightskip}{0pt plus 5cm}struct evconnlistener$\ast$ listener}}\label{smtp_8c_a0fb084a5ef4d5874db805c2df1375d7b}

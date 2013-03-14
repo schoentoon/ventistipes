@@ -1,0 +1,137 @@
+\hypertarget{string__helpers_8c}{\section{src/string\-\_\-helpers.c File Reference}
+\label{string__helpers_8c}\index{src/string\-\_\-helpers.\-c@{src/string\-\_\-helpers.\-c}}
+}
+{\ttfamily \#include \char`\"{}string\-\_\-helpers.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$ctype.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+Include dependency graph for string\-\_\-helpers.\-c\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{string__helpers_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{string__helpers_8c_ad0e6e7f4f903e034b0695058dbefc0a8}{string\-\_\-starts\-With} (char $\ast$line, char $\ast$start)
+\item 
+int \hyperlink{string__helpers_8c_a6a5539242dc66ee57ed8a30c6bd5979e}{string\-\_\-equals} (char $\ast$str1, char $\ast$str2)
+\item 
+char $\ast$ \hyperlink{string__helpers_8c_a3ae7aaac50348f5b99fca069b9667bee}{strip\-Out\-Email\-Address} (char $\ast$line)
+\item 
+int \hyperlink{string__helpers_8c_a20e4e1d1cf8752378fad387f1272fa8d}{string\-\_\-contains} (char $\ast$line, char c)
+\item 
+int \hyperlink{string__helpers_8c_a358ac995b012642a8d75d63d8f93b122}{valididate\-Email\-Address} (char $\ast$\hyperlink{structemail}{email})
+\item 
+int \hyperlink{string__helpers_8c_a7b39a32f1f7fdc1f805e61eab1d3f516}{for\-Each\-Character} (char $\ast$input, int($\ast$function)(char input))
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{string__helpers_8c_a7b39a32f1f7fdc1f805e61eab1d3f516}{\index{string\-\_\-helpers.\-c@{string\-\_\-helpers.\-c}!for\-Each\-Character@{for\-Each\-Character}}
+\index{for\-Each\-Character@{for\-Each\-Character}!string_helpers.c@{string\-\_\-helpers.\-c}}
+\subsubsection[{for\-Each\-Character}]{\setlength{\rightskip}{0pt plus 5cm}int for\-Each\-Character (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{input, }
+\item[{int($\ast$)(char input)}]{function}
+\end{DoxyParamCaption}
+)}}\label{string__helpers_8c_a7b39a32f1f7fdc1f805e61eab1d3f516}
+Call a function for each character in a string in case it exits with non-\/zero return that value 
+\begin{DoxyParams}{Parameters}
+{\em input} & The input string \\
+\hline
+{\em function} & The function to call for each character \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Fully depends on function 
+\end{DoxyReturn}
+\hypertarget{string__helpers_8c_a20e4e1d1cf8752378fad387f1272fa8d}{\index{string\-\_\-helpers.\-c@{string\-\_\-helpers.\-c}!string\-\_\-contains@{string\-\_\-contains}}
+\index{string\-\_\-contains@{string\-\_\-contains}!string_helpers.c@{string\-\_\-helpers.\-c}}
+\subsubsection[{string\-\_\-contains}]{\setlength{\rightskip}{0pt plus 5cm}int string\-\_\-contains (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{line, }
+\item[{char}]{c}
+\end{DoxyParamCaption}
+)}}\label{string__helpers_8c_a20e4e1d1cf8752378fad387f1272fa8d}
+Return if line contains c 
+\begin{DoxyParams}{Parameters}
+{\em line} & String to check for a certain character \\
+\hline
+{\em c} & the character to check for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if line does contain c 
+\end{DoxyReturn}
+\hypertarget{string__helpers_8c_a6a5539242dc66ee57ed8a30c6bd5979e}{\index{string\-\_\-helpers.\-c@{string\-\_\-helpers.\-c}!string\-\_\-equals@{string\-\_\-equals}}
+\index{string\-\_\-equals@{string\-\_\-equals}!string_helpers.c@{string\-\_\-helpers.\-c}}
+\subsubsection[{string\-\_\-equals}]{\setlength{\rightskip}{0pt plus 5cm}int string\-\_\-equals (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str1, }
+\item[{char $\ast$}]{str2}
+\end{DoxyParamCaption}
+)}}\label{string__helpers_8c_a6a5539242dc66ee57ed8a30c6bd5979e}
+Simple check if str1 is equal to str2 
+\begin{DoxyParams}{Parameters}
+{\em str1} & Input string 1 \\
+\hline
+{\em str2} & Input string 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+It'll return 1 in case they're equal, else it'll return 0 
+\end{DoxyReturn}
+\hypertarget{string__helpers_8c_ad0e6e7f4f903e034b0695058dbefc0a8}{\index{string\-\_\-helpers.\-c@{string\-\_\-helpers.\-c}!string\-\_\-starts\-With@{string\-\_\-starts\-With}}
+\index{string\-\_\-starts\-With@{string\-\_\-starts\-With}!string_helpers.c@{string\-\_\-helpers.\-c}}
+\subsubsection[{string\-\_\-starts\-With}]{\setlength{\rightskip}{0pt plus 5cm}int string\-\_\-starts\-With (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str1, }
+\item[{char $\ast$}]{str2}
+\end{DoxyParamCaption}
+)}}\label{string__helpers_8c_ad0e6e7f4f903e034b0695058dbefc0a8}
+Simple check if str1 starts with str2 
+\begin{DoxyParams}{Parameters}
+{\em str1} & Input string \\
+\hline
+{\em str2} & String line has to start with \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+It'll return 1 in case line does start with start, else it'll return 0 
+\end{DoxyReturn}
+\hypertarget{string__helpers_8c_a3ae7aaac50348f5b99fca069b9667bee}{\index{string\-\_\-helpers.\-c@{string\-\_\-helpers.\-c}!strip\-Out\-Email\-Address@{strip\-Out\-Email\-Address}}
+\index{strip\-Out\-Email\-Address@{strip\-Out\-Email\-Address}!string_helpers.c@{string\-\_\-helpers.\-c}}
+\subsubsection[{strip\-Out\-Email\-Address}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ strip\-Out\-Email\-Address (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{line}
+\end{DoxyParamCaption}
+)}}\label{string__helpers_8c_a3ae7aaac50348f5b99fca069b9667bee}
+Return just the email address 
+\begin{DoxyParams}{Parameters}
+{\em line} & Raw line from the S\-M\-T\-P client \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new string with just the email address 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+line is not freed. 
+\end{DoxyNote}
+\hypertarget{string__helpers_8c_a358ac995b012642a8d75d63d8f93b122}{\index{string\-\_\-helpers.\-c@{string\-\_\-helpers.\-c}!valididate\-Email\-Address@{valididate\-Email\-Address}}
+\index{valididate\-Email\-Address@{valididate\-Email\-Address}!string_helpers.c@{string\-\_\-helpers.\-c}}
+\subsubsection[{valididate\-Email\-Address}]{\setlength{\rightskip}{0pt plus 5cm}int valididate\-Email\-Address (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{email}
+\end{DoxyParamCaption}
+)}}\label{string__helpers_8c_a358ac995b012642a8d75d63d8f93b122}
+Check if this emailaddress contains 1 at sign and is only made up of letters and/or numbers 
+\begin{DoxyParams}{Parameters}
+{\em email} & The email address to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if it's valid 
+\end{DoxyReturn}

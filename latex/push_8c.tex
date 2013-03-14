@@ -1,0 +1,66 @@
+\hypertarget{push_8c}{\section{src/push/push.c File Reference}
+\label{push_8c}\index{src/push/push.\-c@{src/push/push.\-c}}
+}
+{\ttfamily \#include \char`\"{}push/push.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}postgres.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}safefree.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}push/android.\-h\char`\"{}}\\*
+Include dependency graph for push.\-c\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{push_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{push_8c_a69d7cc1b220a09aaeba3079e17822a17}{launch\-\_\-push\-\_\-queries} (char $\ast$address, void $\ast$context, struct \hyperlink{structemail}{email} $\ast$\hyperlink{structemail}{email})
+\item 
+int \hyperlink{push_8c_aba2da5d318bc3231b4e607788ab7b400}{amount\-\_\-of\-\_\-push\-\_\-functions} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct evdns\-\_\-base $\ast$ \hyperlink{push_8c_aa802242597f5727e3390ad90385fd131}{dns} = N\-U\-L\-L
+\item 
+void($\ast$ \hyperlink{push_8c_ad0d68c8313631ea37c9cd78ec8659e40}{push\-\_\-functions} \mbox{[}$\,$\mbox{]})(struct \hyperlink{structpush__info}{push\-\_\-info} $\ast$, char $\ast$, struct event\-\_\-base $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{push_8c_aba2da5d318bc3231b4e607788ab7b400}{\index{push.\-c@{push.\-c}!amount\-\_\-of\-\_\-push\-\_\-functions@{amount\-\_\-of\-\_\-push\-\_\-functions}}
+\index{amount\-\_\-of\-\_\-push\-\_\-functions@{amount\-\_\-of\-\_\-push\-\_\-functions}!push.c@{push.\-c}}
+\subsubsection[{amount\-\_\-of\-\_\-push\-\_\-functions}]{\setlength{\rightskip}{0pt plus 5cm}int amount\-\_\-of\-\_\-push\-\_\-functions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{push_8c_aba2da5d318bc3231b4e607788ab7b400}
+\hypertarget{push_8c_a69d7cc1b220a09aaeba3079e17822a17}{\index{push.\-c@{push.\-c}!launch\-\_\-push\-\_\-queries@{launch\-\_\-push\-\_\-queries}}
+\index{launch\-\_\-push\-\_\-queries@{launch\-\_\-push\-\_\-queries}!push.c@{push.\-c}}
+\subsubsection[{launch\-\_\-push\-\_\-queries}]{\setlength{\rightskip}{0pt plus 5cm}void launch\-\_\-push\-\_\-queries (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{address, }
+\item[{void $\ast$}]{context, }
+\item[{struct {\bf email} $\ast$}]{email}
+\end{DoxyParamCaption}
+)}}\label{push_8c_a69d7cc1b220a09aaeba3079e17822a17}
+
+
+\subsection{Variable Documentation}
+\hypertarget{push_8c_aa802242597f5727e3390ad90385fd131}{\index{push.\-c@{push.\-c}!dns@{dns}}
+\index{dns@{dns}!push.c@{push.\-c}}
+\subsubsection[{dns}]{\setlength{\rightskip}{0pt plus 5cm}struct evdns\-\_\-base$\ast$ dns = N\-U\-L\-L}}\label{push_8c_aa802242597f5727e3390ad90385fd131}
+\hypertarget{push_8c_ad0d68c8313631ea37c9cd78ec8659e40}{\index{push.\-c@{push.\-c}!push\-\_\-functions@{push\-\_\-functions}}
+\index{push\-\_\-functions@{push\-\_\-functions}!push.c@{push.\-c}}
+\subsubsection[{push\-\_\-functions}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ push\-\_\-functions\mbox{[}$\,$\mbox{]})(struct {\bf push\-\_\-info} $\ast$, char $\ast$, struct event\-\_\-base $\ast$)}}\label{push_8c_ad0d68c8313631ea37c9cd78ec8659e40}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+  \hyperlink{android_8h_a9057dbf56736a0461560bdca4d0eba4c}{android\_push},
+  NULL
+\}
+\end{DoxyCode}

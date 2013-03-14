@@ -1,0 +1,64 @@
+\hypertarget{postgres_8h}{\section{include/postgres.h File Reference}
+\label{postgres_8h}\index{include/postgres.\-h@{include/postgres.\-h}}
+}
+{\ttfamily \#include \char`\"{}config/dbinfo.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$event2/event.\-h$>$}\\*
+{\ttfamily \#include $<$libpq-\/fe.\-h$>$}\\*
+Include dependency graph for postgres.\-h\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{postgres_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{postgres_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{postgres_8h_a053b7859476cc9867ec62c49e68d3fa1}{M\-A\-X\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S}~10
+\item 
+\#define \hyperlink{postgres_8h_ac907f69ffe5bba53db033dfbfea600c5}{M\-A\-X\-\_\-\-I\-D\-L\-E\-\_\-\-T\-I\-C\-K\-S}~120
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{postgres_8h_ad2d8d5718324b20d939a4b04cd3131ff}{init\-Database\-Pool} (struct event\-\_\-base $\ast$base)
+\item 
+int \hyperlink{postgres_8h_a953a5303803fe3ab05decb3c4c7db8a8}{database\-Query} (char $\ast$query, void($\ast$callback)(P\-Gresult $\ast$, void $\ast$, char $\ast$), void $\ast$context)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{postgres_8h_a053b7859476cc9867ec62c49e68d3fa1}{\index{postgres.\-h@{postgres.\-h}!M\-A\-X\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S@{M\-A\-X\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S}}
+\index{M\-A\-X\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S@{M\-A\-X\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S}!postgres.h@{postgres.\-h}}
+\subsubsection[{M\-A\-X\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-X\-\_\-\-C\-O\-N\-N\-E\-C\-T\-I\-O\-N\-S~10}}\label{postgres_8h_a053b7859476cc9867ec62c49e68d3fa1}
+\hypertarget{postgres_8h_ac907f69ffe5bba53db033dfbfea600c5}{\index{postgres.\-h@{postgres.\-h}!M\-A\-X\-\_\-\-I\-D\-L\-E\-\_\-\-T\-I\-C\-K\-S@{M\-A\-X\-\_\-\-I\-D\-L\-E\-\_\-\-T\-I\-C\-K\-S}}
+\index{M\-A\-X\-\_\-\-I\-D\-L\-E\-\_\-\-T\-I\-C\-K\-S@{M\-A\-X\-\_\-\-I\-D\-L\-E\-\_\-\-T\-I\-C\-K\-S}!postgres.h@{postgres.\-h}}
+\subsubsection[{M\-A\-X\-\_\-\-I\-D\-L\-E\-\_\-\-T\-I\-C\-K\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-X\-\_\-\-I\-D\-L\-E\-\_\-\-T\-I\-C\-K\-S~120}}\label{postgres_8h_ac907f69ffe5bba53db033dfbfea600c5}
+
+
+\subsection{Function Documentation}
+\hypertarget{postgres_8h_a953a5303803fe3ab05decb3c4c7db8a8}{\index{postgres.\-h@{postgres.\-h}!database\-Query@{database\-Query}}
+\index{database\-Query@{database\-Query}!postgres.h@{postgres.\-h}}
+\subsubsection[{database\-Query}]{\setlength{\rightskip}{0pt plus 5cm}int database\-Query (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{query, }
+\item[{void($\ast$)(P\-Gresult $\ast$, void $\ast$, char $\ast$)}]{callback, }
+\item[{void $\ast$}]{context}
+\end{DoxyParamCaption}
+)}}\label{postgres_8h_a953a5303803fe3ab05decb3c4c7db8a8}
+\hypertarget{postgres_8h_ad2d8d5718324b20d939a4b04cd3131ff}{\index{postgres.\-h@{postgres.\-h}!init\-Database\-Pool@{init\-Database\-Pool}}
+\index{init\-Database\-Pool@{init\-Database\-Pool}!postgres.h@{postgres.\-h}}
+\subsubsection[{init\-Database\-Pool}]{\setlength{\rightskip}{0pt plus 5cm}void init\-Database\-Pool (
+\begin{DoxyParamCaption}
+\item[{struct event\-\_\-base $\ast$}]{base}
+\end{DoxyParamCaption}
+)}}\label{postgres_8h_ad2d8d5718324b20d939a4b04cd3131ff}

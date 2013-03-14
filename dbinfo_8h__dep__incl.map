@@ -1,0 +1,7 @@
+<map id="include/config/dbinfo.h" name="include/config/dbinfo.h">
+<area shape="rect" id="node3" href="$postgres_8h.html" title="include/postgres.h" alt="" coords="168,80,296,107"/>
+<area shape="rect" id="node5" href="$main_8c.html" title="src/main.c" alt="" coords="5,155,88,181"/>
+<area shape="rect" id="node7" href="$postgres_8c.html" title="src/postgres.c" alt="" coords="113,155,217,181"/>
+<area shape="rect" id="node9" href="$push_8c.html" title="src/push/push.c" alt="" coords="243,155,357,181"/>
+<area shape="rect" id="node11" href="$smtp_8c.html" title="src/smtp.c" alt="" coords="382,155,465,181"/>
+</map>
