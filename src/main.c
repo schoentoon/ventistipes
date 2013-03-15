@@ -21,9 +21,10 @@
 #include <event.h>
 #include <signal.h>
 #include <getopt.h>
+#include <limits.h>
+#include <unistd.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
-#include <unistd.h>
 
 static const struct option g_LongOpts[] = {
   { "help",     no_argument,       0, 'h' },
