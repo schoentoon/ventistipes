@@ -37,13 +37,13 @@ struct evconnlistener *listener;
 static void smtp_listener_cb(struct evconnlistener *listener
                             ,evutil_socket_t fd, struct sockaddr *sa, int socklen, void *user_data);
 
-int initMailListener(struct event_base* event_base)
+int initMailListener(struct event_base* event_base, unsigned short listen_port)
 {
   struct sockaddr_in sin;
 
   memset(&sin, 0, sizeof(sin));
   sin.sin_family = AF_INET;
-  sin.sin_port = htons(SERVER_PORT);
+  sin.sin_port = htons(listen_port);
 
   listener = evconnlistener_new_bind(event_base, smtp_listener_cb, (void*) event_base
                                     ,LEV_OPT_REUSEABLE|LEV_OPT_CLOSE_ON_FREE, -1

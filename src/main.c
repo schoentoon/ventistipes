@@ -28,6 +28,7 @@
 static const struct option g_LongOpts[] = {
   { "help",     no_argument,       0, 'h' },
   { "debug",    no_argument,       0, 'D' },
+  { "port",     required_argument, 0, 'p' },
   { 0, 0, 0, 0 }
 };
 
@@ -44,20 +45,30 @@ void usage()
 {
   printf("USAGE: ventistipes [options]\n");
   printf("-h, --help\tShow this help.\n");
+  printf("-p, --port\tListen on this port, defaults to 2525.\n");
   printf("-D, --debug\tKeep open for debugging.\n");
 }
 
 int main(int argc, char **argv)
 {
-  int iArg, iOptIndex = -1;
+  int iArg, iOptIndex, tmp = -1;
+  unsigned short listen_port = 2525;
   char debug = 0;
 #ifdef DEV
   debug = 1;
 #endif //DEV
-  while ((iArg = getopt_long(argc, argv, "hD", g_LongOpts, &iOptIndex)) != -1) {
+  while ((iArg = getopt_long(argc, argv, "hDp:", g_LongOpts, &iOptIndex)) != -1) {
     switch (iArg) {
       case 'D':
         debug = 1;
+        break;
+      case 'p':
+        tmp = strtol(optarg, NULL, 10);
+        if ((errno == ERANGE || (tmp == LONG_MAX || tmp == LONG_MIN)) || (errno != 0 && tmp == 0) || tmp < 0 || tmp > 65535) {
+          fprintf(stderr, "--port requires a valid port.\n");
+          return 1;
+        }
+        listen_port = (unsigned short) tmp;
         break;
       default:
       case 'h':
@@ -71,7 +82,7 @@ int main(int argc, char **argv)
     ERR_load_crypto_strings();
     SSL_load_error_strings();
     OpenSSL_add_all_algorithms();
-    initMailListener(event_base);
+    initMailListener(event_base, listen_port);
     initDatabasePool(event_base);
     signal(SIGTERM, onSignal);
     signal(SIGSTOP, onSignal);

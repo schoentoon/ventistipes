@@ -20,9 +20,7 @@
 
 #include <event.h>
 
-#define SERVER_PORT 2525
-
-int initMailListener(struct event_base* event_base);
+int initMailListener(struct event_base* event_base, unsigned short listen_port);
 
 void closeMailListener();
 
