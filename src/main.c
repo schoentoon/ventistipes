@@ -19,18 +19,30 @@
 #include "postgres.h"
 
 #include <event.h>
+#include <signal.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
+struct event_base* event_base = NULL;
+
+void onSignal(int signal)
+{
+  closeMailListener();
+  event_base_free(event_base);
+  exit(0);
+}
+
 int main(int argc, char **argv)
 {
-  struct event_base* event_base = event_base_new();
+  event_base = event_base_new();
   SSL_library_init();
   ERR_load_crypto_strings();
   SSL_load_error_strings();
   OpenSSL_add_all_algorithms();
   initMailListener(event_base);
   initDatabasePool(event_base);
+  signal(SIGTERM, onSignal);
+  signal(SIGSTOP, onSignal);
   event_base_dispatch(event_base); /* We probably won't go further than this line.. */
   closeMailListener();
   event_base_free(event_base);
