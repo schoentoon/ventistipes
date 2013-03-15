@@ -11,8 +11,8 @@ Get started
 - Start off by creating a new database (PostgreSQL) using database_schema.sql.
 - Edit include/config/dbinfo.h accordingly
 - Follow the instructions in include/config/gcm_key.h
-- Build it using $ make
-- Run it (it won't go into the background atm, sorry about that)
+- Build it using $ make (run $ make clean first if you're building a newer version)
+- Run it
 - Actually fill in your database
 - Send emails to it
 

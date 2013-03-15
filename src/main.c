@@ -20,8 +20,16 @@
 
 #include <event.h>
 #include <signal.h>
+#include <getopt.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+#include <unistd.h>
+
+static const struct option g_LongOpts[] = {
+  { "help",     no_argument,       0, 'h' },
+  { "debug",    no_argument,       0, 'D' },
+  { 0, 0, 0, 0 }
+};
 
 struct event_base* event_base = NULL;
 
@@ -32,19 +40,44 @@ void onSignal(int signal)
   exit(0);
 }
 
+void usage()
+{
+  printf("USAGE: ventistipes [options]\n");
+  printf("-h, --help\tShow this help.\n");
+  printf("-D, --debug\tKeep open for debugging.\n");
+}
+
 int main(int argc, char **argv)
 {
-  event_base = event_base_new();
-  SSL_library_init();
-  ERR_load_crypto_strings();
-  SSL_load_error_strings();
-  OpenSSL_add_all_algorithms();
-  initMailListener(event_base);
-  initDatabasePool(event_base);
-  signal(SIGTERM, onSignal);
-  signal(SIGSTOP, onSignal);
-  event_base_dispatch(event_base); /* We probably won't go further than this line.. */
-  closeMailListener();
-  event_base_free(event_base);
+  int iArg, iOptIndex = -1;
+  char debug = 0;
+#ifdef DEV
+  debug = 1;
+#endif //DEV
+  while ((iArg = getopt_long(argc, argv, "hD", g_LongOpts, &iOptIndex)) != -1) {
+    switch (iArg) {
+      case 'D':
+        debug = 1;
+        break;
+      default:
+      case 'h':
+        usage();
+        return 0;
+    }
+  }
+  if ((debug == 0 && fork() == 0) || debug) {
+    event_base = event_base_new();
+    SSL_library_init();
+    ERR_load_crypto_strings();
+    SSL_load_error_strings();
+    OpenSSL_add_all_algorithms();
+    initMailListener(event_base);
+    initDatabasePool(event_base);
+    signal(SIGTERM, onSignal);
+    signal(SIGSTOP, onSignal);
+    event_base_dispatch(event_base); /* We probably won't go further than this line.. */
+    closeMailListener();
+    event_base_free(event_base);
+  }
   return 0;
 }
