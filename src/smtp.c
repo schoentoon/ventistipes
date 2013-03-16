@@ -18,7 +18,6 @@
 #include "smtp.h"
 
 #include "email.h"
-#include "macros.h"
 #include "safefree.h"
 #include "push/push.h"
 #include "string_helpers.h"

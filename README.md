@@ -1,4 +1,4 @@
-ventistipes
+Ventistipes
 ===========
 
 [![Build Status](https://travis-ci.org/schoentoon/ventistipes.png)](https://travis-ci.org/schoentoon/ventistipes)
@@ -16,7 +16,7 @@ Get started
 - Actually fill in your database
 - Send emails to it
 
-You can find an example Android client over [here](https://github.com/schoentoon/ventistipes-android)
+You can find an example Android client over [here](https://github.com/schoentoon/ventistipes-android).
 
 Database
 ========
