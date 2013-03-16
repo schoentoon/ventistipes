@@ -20,6 +20,11 @@
 
 #define MAX_RECIPIENTS 100
 
+#define HEADERS 0
+#define DATA_HEADERS 1
+#define DATA 2
+#define DATA_DONE 3
+
 struct email {
   char ehlo;
   char* from;
@@ -27,12 +32,7 @@ struct email {
   char* subject;
   char* data;
   struct bufferevent *bev;
-  enum email_fillin_mode {
-    HEADERS = 0,
-    DATA_HEADERS = 1,
-    DATA = 2,
-    DATA_DONE = 3
-  } mode;
+  char mode;
 };
 
 /** Create a new email structure and return this
