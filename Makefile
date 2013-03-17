@@ -1,7 +1,8 @@
 CFLAGS := $(CFLAGS) -Wall -O2 -mtune=native -g
 INC    := -Iinclude -I/usr/include/postgresql $(INC)
 LFLAGS := -levent -levent_openssl -lpq -lssl -lcrypto
-DEFINES:= $(DEFINES)
+VERSION:= $(shell git describe)
+DEFINES:= $(DEFINES) -DVERSION=\"$(VERSION)\"
 CC     := gcc
 BINARY := ventistipes
 DEPS   := build/main.o build/smtp.o build/string_helpers.o build/email.o build/postgres.o build/safefree.o \

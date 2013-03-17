@@ -48,6 +48,7 @@ void usage()
   printf("-h, --help\tShow this help.\n");
   printf("-p, --port\tListen on this port, defaults to 2525.\n");
   printf("-D, --debug\tKeep open for debugging.\n");
+  printf("-v, --version\tDisplay ventistipes's version.\n");
 }
 
 int main(int argc, char **argv)
@@ -58,7 +59,7 @@ int main(int argc, char **argv)
 #ifdef DEV
   debug = 1;
 #endif //DEV
-  while ((iArg = getopt_long(argc, argv, "hDp:", g_LongOpts, &iOptIndex)) != -1) {
+  while ((iArg = getopt_long(argc, argv, "hDvp:", g_LongOpts, &iOptIndex)) != -1) {
     switch (iArg) {
       case 'D':
         debug = 1;
@@ -71,6 +72,9 @@ int main(int argc, char **argv)
         }
         listen_port = (unsigned short) tmp;
         break;
+      case 'v':
+        printf("Ventistipes ~ " VERSION "\n");
+        return 0;
       default:
       case 'h':
         usage();
