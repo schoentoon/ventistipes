@@ -24,6 +24,10 @@
 #  error "If you decide to not use gcm just define it to something empty please."
 #endif
 
+#include "safefree.h"
+
+#define BUFFER_SIZE 1024*4
+
 #include <openssl/ssl.h>
 
 #include <event2/dns.h>
@@ -55,6 +59,18 @@ static void android_eventcb(struct bufferevent *bev, short events, void* args)
   bufferevent_free(bev);
 }
 
+char* stripData(char* data, size_t to_length)
+{
+  size_t len = strlen(data);
+  size_t output_len = (len < to_length) ? len : to_length;
+  char* output = malloc(output_len);
+  int i;
+  for (i = 0; i < output_len; i++)
+    output[i] = data[i];
+  output[output_len] = '\0';
+  return output;
+}
+
 static char* _POST = "POST /gcm/send HTTP/1.0\r\n";
 static char* _HOST = "Host: android.googleapis.com\r\n";
 static char* _USER_AGENT = "User-Agent: Ventistipes\r\n";
@@ -80,20 +96,27 @@ void android_push(struct push_info* push_info, char* push_id, struct event_base*
   bufferevent_write(bev, API_KEY, strlen(API_KEY));
   bufferevent_write(bev, _CRLF, strlen(_CRLF));
   bufferevent_write(bev, _CONTENT_LENGTH, strlen(_CONTENT_LENGTH));
-  char buffer[4096]; //TODO Could be overflowed atm, but then again the data field isn't supposed to be bigger than 4096 bytes..
-  sprintf(buffer, "{\"registration_ids\":[\"%s\"],\"data\":{", push_id);
-  if (push_info->subject)
-    sprintf(buffer, "%s\"subject\":\"%s\"", buffer
-                  , push_info->subject);
-  if (push_info->data)
-    sprintf(buffer, "%s%s\"data\":\"%s\"", buffer
-                  , (push_info->subject ? "," : ""), push_info->data);
-  if (push_info->sender)
-    sprintf(buffer, "%s%s\"sender\":\"%s\"", buffer
-                  , ((push_info->subject || push_info->data) ? "," : ""), push_info->sender);
-  sprintf(buffer, "%s}}", buffer);
+  char data[BUFFER_SIZE];
+  sprintf(data, "");
+  if (push_info->subject) {
+    char* tmp = stripData(push_info->subject, BUFFER_SIZE-12);
+    sprintf(data, "%s\"subject\":\"%s\"", data, tmp);
+    SAFEFREE(tmp);
+  }
+  if (push_info->sender) {
+    char* tmp = stripData(push_info->sender, BUFFER_SIZE-strlen(data)-11-((push_info->subject) ? 1 : 0));
+    sprintf(data, "%s%s\"sender\":\"%s\"", data, ((push_info->subject) ? "," : ""), tmp);
+    SAFEFREE(tmp);
+  }
+  if (push_info->data) {
+    char* tmp = stripData(push_info->data, BUFFER_SIZE-strlen(data)-9-((push_info->subject || push_info->sender) ? 1 : 0));
+    sprintf(data, "%s%s\"data\":\"%s\"", data, ((push_info->subject || push_info->sender) ? "," : ""), tmp);
+    SAFEFREE(tmp);
+  }
+  char buffer[1024*6];
+  sprintf(buffer, "{\"registration_ids\":[\"%s\"],\"data\":{%s}}", push_id, data);
 #ifdef DEV
-  printf("%s\n",buffer);
+  printf("\n\nJSON: %s\n\n", buffer);
 #endif //DEV
   char length_buffer[4];
   snprintf(length_buffer, sizeof(length_buffer), "%zd", strlen(buffer));
