@@ -3,7 +3,7 @@ compiler:
   - gcc
   - clang
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq libevent-dev libevent-openssl-2.0
-  - sudo apt-get install -qq libpq-dev
-script: make dev
+  - sudo apt-get update -qq >/dev/null 2>&1
+  - sudo apt-get install -qq libevent-dev libevent-openssl-2.0 >/dev/null 2>&1
+  - sudo apt-get install -qq libpq-dev >/dev/null 2>&1
+script: make dev CC=$CC
