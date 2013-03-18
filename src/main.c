@@ -57,7 +57,7 @@ void usage()
 
 int main(int argc, char **argv)
 {
-  int iArg, iOptIndex, tmp = -1;
+  int iArg, iOptIndex = -1;
   unsigned short listen_port = 2525;
   char debug = 0;
 #ifdef DEV
@@ -68,14 +68,15 @@ int main(int argc, char **argv)
       case 'D':
         debug = 1;
         break;
-      case 'p':
-        tmp = strtol(optarg, NULL, 10);
+      case 'p': {
+        long tmp = strtol(optarg, NULL, 10);
         if ((errno == ERANGE || (tmp == LONG_MAX || tmp == LONG_MIN)) || (errno != 0 && tmp == 0) || tmp < 0 || tmp > 65535) {
           fprintf(stderr, "--port requires a valid port.\n");
           return 1;
         }
         listen_port = (unsigned short) tmp;
         break;
+      }
       case 'l':
         set_logfile(optarg);
         break;
