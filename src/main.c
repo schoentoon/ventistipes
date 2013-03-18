@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "log.h"
 #include "smtp.h"
 #include "postgres.h"
 
@@ -30,6 +31,7 @@ static const struct option g_LongOpts[] = {
   { "help",     no_argument,       0, 'h' },
   { "debug",    no_argument,       0, 'D' },
   { "port",     required_argument, 0, 'p' },
+  { "log",      required_argument, 0, 'l' },
   { 0, 0, 0, 0 }
 };
 
@@ -37,6 +39,7 @@ struct event_base* event_base = NULL;
 
 void onSignal(int signal)
 {
+  write_to_log("Exiting because we received signal %d.", signal);
   closeMailListener();
   event_base_free(event_base);
   exit(0);
@@ -49,6 +52,7 @@ void usage()
   printf("-p, --port\tListen on this port, defaults to 2525.\n");
   printf("-D, --debug\tKeep open for debugging.\n");
   printf("-v, --version\tDisplay ventistipes's version.\n");
+  printf("-l, --log\tWrite a log to this file.\n");
 }
 
 int main(int argc, char **argv)
@@ -59,7 +63,7 @@ int main(int argc, char **argv)
 #ifdef DEV
   debug = 1;
 #endif //DEV
-  while ((iArg = getopt_long(argc, argv, "hDvp:", g_LongOpts, &iOptIndex)) != -1) {
+  while ((iArg = getopt_long(argc, argv, "hDvp:l:", g_LongOpts, &iOptIndex)) != -1) {
     switch (iArg) {
       case 'D':
         debug = 1;
@@ -71,6 +75,9 @@ int main(int argc, char **argv)
           return 1;
         }
         listen_port = (unsigned short) tmp;
+        break;
+      case 'l':
+        set_logfile(optarg);
         break;
       case 'v':
         printf("Ventistipes ~ " VERSION "\n");

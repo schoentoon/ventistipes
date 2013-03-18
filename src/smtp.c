@@ -17,6 +17,7 @@
 
 #include "smtp.h"
 
+#include "log.h"
 #include "email.h"
 #include "safefree.h"
 #include "push/push.h"
@@ -39,19 +40,17 @@ static void smtp_listener_cb(struct evconnlistener *listener
 int initMailListener(struct event_base* event_base, unsigned short listen_port)
 {
   struct sockaddr_in sin;
-
   memset(&sin, 0, sizeof(sin));
   sin.sin_family = AF_INET;
   sin.sin_port = htons(listen_port);
-
   listener = evconnlistener_new_bind(event_base, smtp_listener_cb, (void*) event_base
                                     ,LEV_OPT_REUSEABLE|LEV_OPT_CLOSE_ON_FREE, -1
                                     ,(struct sockaddr*) &sin, sizeof(sin));
-
   if (!listener) {
-    fprintf(stderr, "Could not create a listener!\n");
+    ERROR("Could not create a listener on port %d.", listen_port);
     return 1;
   }
+  write_to_log("Listening on port %d.", listen_port);
   return 0;
 }
 
@@ -188,7 +187,7 @@ static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
   struct event_base* base = user_data;
   struct bufferevent* bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
   if (!bev) {
-    fprintf(stderr, "Error constructing bufferevent!");
+    ERROR("Error constructing bufferevent!");
     event_base_loopbreak(base);
     return;
   }
