@@ -18,24 +18,13 @@ This graph shows which files directly or indirectly include this file\-:
 \includegraphics[width=223pt]{smtp_8h__dep__incl}
 \end{center}
 \end{figure}
-\subsection*{Macros}
-\begin{DoxyCompactItemize}
-\item 
-\#define \hyperlink{smtp_8h_ac42367fe5c999ec6650de83e9d72fe8c}{S\-E\-R\-V\-E\-R\-\_\-\-P\-O\-R\-T}~2525
-\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{smtp_8h_a11d628714b4cd9cf45c5726d1093410e}{init\-Mail\-Listener} (struct event\-\_\-base $\ast$event\-\_\-base)
+int \hyperlink{smtp_8h_a2cda0186363c8fc3eb7e82796b0159b5}{init\-Mail\-Listener} (struct \hyperlink{main_8c_ac1c1d71aa37cb71608f4f802bb85b200}{event\-\_\-base} $\ast$\hyperlink{main_8c_ac1c1d71aa37cb71608f4f802bb85b200}{event\-\_\-base}, unsigned short listen\-\_\-port)
 \item 
 void \hyperlink{smtp_8h_a7a834543fbece476c2fed45df76822c0}{close\-Mail\-Listener} ()
 \end{DoxyCompactItemize}
-
-
-\subsection{Macro Definition Documentation}
-\hypertarget{smtp_8h_ac42367fe5c999ec6650de83e9d72fe8c}{\index{smtp.\-h@{smtp.\-h}!S\-E\-R\-V\-E\-R\-\_\-\-P\-O\-R\-T@{S\-E\-R\-V\-E\-R\-\_\-\-P\-O\-R\-T}}
-\index{S\-E\-R\-V\-E\-R\-\_\-\-P\-O\-R\-T@{S\-E\-R\-V\-E\-R\-\_\-\-P\-O\-R\-T}!smtp.h@{smtp.\-h}}
-\subsubsection[{S\-E\-R\-V\-E\-R\-\_\-\-P\-O\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\-E\-R\-V\-E\-R\-\_\-\-P\-O\-R\-T~2525}}\label{smtp_8h_ac42367fe5c999ec6650de83e9d72fe8c}
 
 
 \subsection{Function Documentation}
@@ -46,10 +35,21 @@ void \hyperlink{smtp_8h_a7a834543fbece476c2fed45df76822c0}{close\-Mail\-Listener
 {}
 \end{DoxyParamCaption}
 )}}\label{smtp_8h_a7a834543fbece476c2fed45df76822c0}
-\hypertarget{smtp_8h_a11d628714b4cd9cf45c5726d1093410e}{\index{smtp.\-h@{smtp.\-h}!init\-Mail\-Listener@{init\-Mail\-Listener}}
+Close the smtp listener \hypertarget{smtp_8h_a2cda0186363c8fc3eb7e82796b0159b5}{\index{smtp.\-h@{smtp.\-h}!init\-Mail\-Listener@{init\-Mail\-Listener}}
 \index{init\-Mail\-Listener@{init\-Mail\-Listener}!smtp.h@{smtp.\-h}}
 \subsubsection[{init\-Mail\-Listener}]{\setlength{\rightskip}{0pt plus 5cm}int init\-Mail\-Listener (
 \begin{DoxyParamCaption}
-\item[{struct event\-\_\-base $\ast$}]{event\-\_\-base}
+\item[{struct {\bf event\-\_\-base} $\ast$}]{event\-\_\-base, }
+\item[{unsigned short}]{listen\-\_\-port}
 \end{DoxyParamCaption}
-)}}\label{smtp_8h_a11d628714b4cd9cf45c5726d1093410e}
+)}}\label{smtp_8h_a2cda0186363c8fc3eb7e82796b0159b5}
+Init the smtp listener 
+\begin{DoxyParams}{Parameters}
+{\em event\-\_\-base} & event\-\_\-base to use to listen on \\
+\hline
+{\em listen\-\_\-port} & port to listen on \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 in case we're actually listening 
+\end{DoxyReturn}

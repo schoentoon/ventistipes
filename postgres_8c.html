@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -113,7 +113,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ad2d8d5718324b20d939a4b04cd3131ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="postgres_8c.html#ad2d8d5718324b20d939a4b04cd3131ff">initDatabasePool</a> (struct event_base *base)</td></tr>
+<tr class="memitem:ad2d8d5718324b20d939a4b04cd3131ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="postgres_8c.html#ad2d8d5718324b20d939a4b04cd3131ff">initDatabasePool</a> (struct <a class="el" href="main_8c.html#ac1c1d71aa37cb71608f4f802bb85b200">event_base</a> *base)</td></tr>
 <tr class="separator:ad2d8d5718324b20d939a4b04cd3131ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ffcffb58bb853dde98160e1e4546f2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="postgres_8c.html#a7ffcffb58bb853dde98160e1e4546f2c">appendQueryPool</a> (struct <a class="el" href="structconnection__struct.html">connection_struct</a> *conn, struct <a class="el" href="structquery__struct.html">query_struct</a> *query)</td></tr>
 <tr class="separator:a7ffcffb58bb853dde98160e1e4546f2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +181,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Execute a query on our database pool </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">query</td><td>The query to execute </td></tr>
+    <tr><td class="paramname">callback</td><td>The function to call after our query is done </td></tr>
+    <tr><td class="paramname">context</td><td>A pointer to pass to your callback </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 in case the query was valid and put onto our database pool </dd></dl>
 
 </div>
 </div>
@@ -191,12 +201,19 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">void initDatabasePool </td>
           <td>(</td>
-          <td class="paramtype">struct event_base *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="main_8c.html#ac1c1d71aa37cb71608f4f802bb85b200">event_base</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Initialize our database pool </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The event_base used for our internal timer </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -216,7 +233,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 14 2013 09:33:27 for Ventistipes by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 19 2013 15:13:37 for Ventistipes by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

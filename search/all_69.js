@@ -2,6 +2,6 @@ var searchData=
 [
   ['idle_5fticker',['idle_ticker',['../structconnection__struct.html#a2e4c5444712d727aaeb1050a4c734d4f',1,'connection_struct']]],
   ['initdatabasepool',['initDatabasePool',['../postgres_8h.html#ad2d8d5718324b20d939a4b04cd3131ff',1,'initDatabasePool(struct event_base *base):&#160;postgres.c'],['../postgres_8c.html#ad2d8d5718324b20d939a4b04cd3131ff',1,'initDatabasePool(struct event_base *base):&#160;postgres.c']]],
-  ['initmaillistener',['initMailListener',['../smtp_8h.html#a11d628714b4cd9cf45c5726d1093410e',1,'initMailListener(struct event_base *event_base):&#160;smtp.c'],['../smtp_8c.html#a11d628714b4cd9cf45c5726d1093410e',1,'initMailListener(struct event_base *event_base):&#160;smtp.c']]],
+  ['initmaillistener',['initMailListener',['../smtp_8h.html#a2cda0186363c8fc3eb7e82796b0159b5',1,'initMailListener(struct event_base *event_base, unsigned short listen_port):&#160;smtp.c'],['../smtp_8c.html#a2cda0186363c8fc3eb7e82796b0159b5',1,'initMailListener(struct event_base *event_base, unsigned short listen_port):&#160;smtp.c']]],
   ['isemailcharacters',['isEmailCharacters',['../smtp_8c.html#a91ed65212973d3dc30e865bd324c50f5',1,'smtp.c']]]
 ];

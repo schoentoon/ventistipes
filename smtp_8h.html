@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -84,7 +84,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">smtp.h File Reference</div>  </div>
@@ -108,31 +107,13 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="smtp_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ac42367fe5c999ec6650de83e9d72fe8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="smtp_8h.html#ac42367fe5c999ec6650de83e9d72fe8c">SERVER_PORT</a>&#160;&#160;&#160;2525</td></tr>
-<tr class="separator:ac42367fe5c999ec6650de83e9d72fe8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a11d628714b4cd9cf45c5726d1093410e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="smtp_8h.html#a11d628714b4cd9cf45c5726d1093410e">initMailListener</a> (struct event_base *event_base)</td></tr>
-<tr class="separator:a11d628714b4cd9cf45c5726d1093410e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cda0186363c8fc3eb7e82796b0159b5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="smtp_8h.html#a2cda0186363c8fc3eb7e82796b0159b5">initMailListener</a> (struct <a class="el" href="main_8c.html#ac1c1d71aa37cb71608f4f802bb85b200">event_base</a> *<a class="el" href="main_8c.html#ac1c1d71aa37cb71608f4f802bb85b200">event_base</a>, unsigned short listen_port)</td></tr>
+<tr class="separator:a2cda0186363c8fc3eb7e82796b0159b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a834543fbece476c2fed45df76822c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="smtp_8h.html#a7a834543fbece476c2fed45df76822c0">closeMailListener</a> ()</td></tr>
 <tr class="separator:a7a834543fbece476c2fed45df76822c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ac42367fe5c999ec6650de83e9d72fe8c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERVER_PORT&#160;&#160;&#160;2525</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a7a834543fbece476c2fed45df76822c0"></a>
 <div class="memitem">
@@ -146,29 +127,49 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Close the smtp listener </p>
 
 </div>
 </div>
-<a class="anchor" id="a11d628714b4cd9cf45c5726d1093410e"></a>
+<a class="anchor" id="a2cda0186363c8fc3eb7e82796b0159b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int initMailListener </td>
           <td>(</td>
-          <td class="paramtype">struct event_base *&#160;</td>
-          <td class="paramname"><em>event_base</em></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="main_8c.html#ac1c1d71aa37cb71608f4f802bb85b200">event_base</a> *&#160;</td>
+          <td class="paramname"><em>event_base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>listen_port</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Init the smtp listener </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event_base</td><td>event_base to use to listen on </td></tr>
+    <tr><td class="paramname">listen_port</td><td>port to listen on </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 in case we're actually listening </dd></dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 14 2013 09:33:27 for Ventistipes by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 19 2013 15:13:37 for Ventistipes by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

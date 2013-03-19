@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -81,7 +81,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">email Struct Reference</div>  </div>
@@ -90,15 +89,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="email_8h_source.html">email.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a9e4fa62032564c26fdeb41bb498463d0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structemail.html#a9e4fa62032564c26fdeb41bb498463d0">email_fillin_mode</a> { <a class="el" href="structemail.html#a9e4fa62032564c26fdeb41bb498463d0ae6c03609bb4f17e56e18c21a49558001">HEADERS</a> = 0, 
-<a class="el" href="structemail.html#a9e4fa62032564c26fdeb41bb498463d0a7280e9a6ff66dd0dfc8858a015f6a3e9">DATA_HEADERS</a> = 1, 
-<a class="el" href="structemail.html#a9e4fa62032564c26fdeb41bb498463d0a9d7d6f31868d66330397c967c4afd2d2">DATA</a> = 2, 
-<a class="el" href="structemail.html#a9e4fa62032564c26fdeb41bb498463d0aeba86cbe2ebe6c838145a449c14bce86">DATA_DONE</a> = 3
- }</td></tr>
-<tr class="separator:a9e4fa62032564c26fdeb41bb498463d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:ab6507ffd67fc6059c2aa721b7b8f8f03"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structemail.html#ab6507ffd67fc6059c2aa721b7b8f8f03">ehlo</a></td></tr>
@@ -113,32 +103,9 @@ Data Fields</h2></td></tr>
 <tr class="separator:a91a70b77df95bd8b0830b49a094c2acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a6bf7d3dd8ad7622482a90042e470ef"><td class="memItemLeft" align="right" valign="top">struct bufferevent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structemail.html#a7a6bf7d3dd8ad7622482a90042e470ef">bev</a></td></tr>
 <tr class="separator:a7a6bf7d3dd8ad7622482a90042e470ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0332a154778fc4836577a47d37674ae"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="structemail.html#a9e4fa62032564c26fdeb41bb498463d0">email::email_fillin_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structemail.html#aa0332a154778fc4836577a47d37674ae">mode</a></td></tr>
-<tr class="separator:aa0332a154778fc4836577a47d37674ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a000e34997df38c2005a83d63e67d9282"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structemail.html#a000e34997df38c2005a83d63e67d9282">mode</a></td></tr>
+<tr class="separator:a000e34997df38c2005a83d63e67d9282"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Enumeration Documentation</h2>
-<a class="anchor" id="a9e4fa62032564c26fdeb41bb498463d0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="structemail.html#a9e4fa62032564c26fdeb41bb498463d0">email_fillin_mode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="a9e4fa62032564c26fdeb41bb498463d0ae6c03609bb4f17e56e18c21a49558001"></a>HEADERS</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a9e4fa62032564c26fdeb41bb498463d0a7280e9a6ff66dd0dfc8858a015f6a3e9"></a>DATA_HEADERS</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a9e4fa62032564c26fdeb41bb498463d0a9d7d6f31868d66330397c967c4afd2d2"></a>DATA</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="a9e4fa62032564c26fdeb41bb498463d0aeba86cbe2ebe6c838145a449c14bce86"></a>DATA_DONE</em>&nbsp;</td><td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a7a6bf7d3dd8ad7622482a90042e470ef"></a>
 <div class="memitem">
@@ -188,12 +155,12 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa0332a154778fc4836577a47d37674ae"></a>
+<a class="anchor" id="a000e34997df38c2005a83d63e67d9282"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="structemail.html#a9e4fa62032564c26fdeb41bb498463d0">email::email_fillin_mode</a>  mode</td>
+          <td class="memname">char mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -230,7 +197,7 @@ Data Fields</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 14 2013 09:33:27 for Ventistipes by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 19 2013 15:13:37 for Ventistipes by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

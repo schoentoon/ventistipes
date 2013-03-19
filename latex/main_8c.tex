@@ -1,9 +1,14 @@
 \hypertarget{main_8c}{\section{src/main.c File Reference}
 \label{main_8c}\index{src/main.\-c@{src/main.\-c}}
 }
+{\ttfamily \#include \char`\"{}log.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}smtp.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}postgres.\-h\char`\"{}}\\*
 {\ttfamily \#include $<$event.\-h$>$}\\*
+{\ttfamily \#include $<$signal.\-h$>$}\\*
+{\ttfamily \#include $<$getopt.\-h$>$}\\*
+{\ttfamily \#include $<$limits.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
 {\ttfamily \#include $<$openssl/ssl.\-h$>$}\\*
 {\ttfamily \#include $<$openssl/err.\-h$>$}\\*
 Include dependency graph for main.\-c\-:
@@ -17,7 +22,16 @@ Include dependency graph for main.\-c\-:
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
+void \hyperlink{main_8c_aeec856fa74dd34d7ca6374d638c27b20}{on\-Signal} (int signal)
+\item 
+void \hyperlink{main_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{usage} ()
+\item 
 int \hyperlink{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct event\-\_\-base $\ast$ \hyperlink{main_8c_ac1c1d71aa37cb71608f4f802bb85b200}{event\-\_\-base} = N\-U\-L\-L
 \end{DoxyCompactItemize}
 
 
@@ -30,3 +44,23 @@ int \hyperlink{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char 
 \item[{char $\ast$$\ast$}]{argv}
 \end{DoxyParamCaption}
 )}}\label{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+\hypertarget{main_8c_aeec856fa74dd34d7ca6374d638c27b20}{\index{main.\-c@{main.\-c}!on\-Signal@{on\-Signal}}
+\index{on\-Signal@{on\-Signal}!main.c@{main.\-c}}
+\subsubsection[{on\-Signal}]{\setlength{\rightskip}{0pt plus 5cm}void on\-Signal (
+\begin{DoxyParamCaption}
+\item[{int}]{signal}
+\end{DoxyParamCaption}
+)}}\label{main_8c_aeec856fa74dd34d7ca6374d638c27b20}
+\hypertarget{main_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}{\index{main.\-c@{main.\-c}!usage@{usage}}
+\index{usage@{usage}!main.c@{main.\-c}}
+\subsubsection[{usage}]{\setlength{\rightskip}{0pt plus 5cm}void usage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{main_8c_a2ef30c42cbc289d899a8be5d2d8f77d0}
+
+
+\subsection{Variable Documentation}
+\hypertarget{main_8c_ac1c1d71aa37cb71608f4f802bb85b200}{\index{main.\-c@{main.\-c}!event\-\_\-base@{event\-\_\-base}}
+\index{event\-\_\-base@{event\-\_\-base}!main.c@{main.\-c}}
+\subsubsection[{event\-\_\-base}]{\setlength{\rightskip}{0pt plus 5cm}struct event\-\_\-base$\ast$ event\-\_\-base = N\-U\-L\-L}}\label{main_8c_ac1c1d71aa37cb71608f4f802bb85b200}

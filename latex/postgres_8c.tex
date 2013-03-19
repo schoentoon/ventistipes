@@ -24,7 +24,7 @@ struct \hyperlink{structconnection__struct}{connection\-\_\-struct}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{postgres_8c_ad2d8d5718324b20d939a4b04cd3131ff}{init\-Database\-Pool} (struct event\-\_\-base $\ast$base)
+void \hyperlink{postgres_8c_ad2d8d5718324b20d939a4b04cd3131ff}{init\-Database\-Pool} (struct \hyperlink{main_8c_ac1c1d71aa37cb71608f4f802bb85b200}{event\-\_\-base} $\ast$base)
 \item 
 void \hyperlink{postgres_8c_a7ffcffb58bb853dde98160e1e4546f2c}{append\-Query\-Pool} (struct \hyperlink{structconnection__struct}{connection\-\_\-struct} $\ast$conn, struct \hyperlink{structquery__struct}{query\-\_\-struct} $\ast$query)
 \item 
@@ -55,13 +55,30 @@ struct \hyperlink{structconnection__struct}{connection\-\_\-struct} $\ast$ \hype
 \item[{void $\ast$}]{context}
 \end{DoxyParamCaption}
 )}}\label{postgres_8c_a953a5303803fe3ab05decb3c4c7db8a8}
+Execute a query on our database pool 
+\begin{DoxyParams}{Parameters}
+{\em query} & The query to execute \\
+\hline
+{\em callback} & The function to call after our query is done \\
+\hline
+{\em context} & A pointer to pass to your callback \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 in case the query was valid and put onto our database pool 
+\end{DoxyReturn}
 \hypertarget{postgres_8c_ad2d8d5718324b20d939a4b04cd3131ff}{\index{postgres.\-c@{postgres.\-c}!init\-Database\-Pool@{init\-Database\-Pool}}
 \index{init\-Database\-Pool@{init\-Database\-Pool}!postgres.c@{postgres.\-c}}
 \subsubsection[{init\-Database\-Pool}]{\setlength{\rightskip}{0pt plus 5cm}void init\-Database\-Pool (
 \begin{DoxyParamCaption}
-\item[{struct event\-\_\-base $\ast$}]{base}
+\item[{struct {\bf event\-\_\-base} $\ast$}]{base}
 \end{DoxyParamCaption}
 )}}\label{postgres_8c_ad2d8d5718324b20d939a4b04cd3131ff}
+Initialize our database pool 
+\begin{DoxyParams}{Parameters}
+{\em base} & The event\-\_\-base used for our internal timer \\
+\hline
+\end{DoxyParams}
 
 
 \subsection{Variable Documentation}

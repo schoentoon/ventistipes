@@ -1,0 +1,58 @@
+\hypertarget{log_8c}{\section{src/log.c File Reference}
+\label{log_8c}\index{src/log.\-c@{src/log.\-c}}
+}
+{\ttfamily \#include \char`\"{}log.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$time.\-h$>$}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$stdarg.\-h$>$}\\*
+{\ttfamily \#include $<$sys/time.\-h$>$}\\*
+Include dependency graph for log.\-c\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{log_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{log_8c_a04dd7f9c3029149480fcbd4e76429fdb}{write\-\_\-to\-\_\-log} (const char $\ast$format,...)
+\item 
+void \hyperlink{log_8c_a180c97931bc899b0b186d00ca32ee9cc}{set\-\_\-logfile} (char $\ast$filename)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{log_8c_a539bec706ac5acbbdef66f363a7a2524}{logfile} = N\-U\-L\-L
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{log_8c_a180c97931bc899b0b186d00ca32ee9cc}{\index{log.\-c@{log.\-c}!set\-\_\-logfile@{set\-\_\-logfile}}
+\index{set\-\_\-logfile@{set\-\_\-logfile}!log.c@{log.\-c}}
+\subsubsection[{set\-\_\-logfile}]{\setlength{\rightskip}{0pt plus 5cm}void set\-\_\-logfile (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}}\label{log_8c_a180c97931bc899b0b186d00ca32ee9cc}
+Configure the log file 
+\begin{DoxyParams}{Parameters}
+{\em filename} & Write a log to this file, file will be created if it doesn't exist. \\
+\hline
+\end{DoxyParams}
+\hypertarget{log_8c_a04dd7f9c3029149480fcbd4e76429fdb}{\index{log.\-c@{log.\-c}!write\-\_\-to\-\_\-log@{write\-\_\-to\-\_\-log}}
+\index{write\-\_\-to\-\_\-log@{write\-\_\-to\-\_\-log}!log.c@{log.\-c}}
+\subsubsection[{write\-\_\-to\-\_\-log}]{\setlength{\rightskip}{0pt plus 5cm}void write\-\_\-to\-\_\-log (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{format, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{log_8c_a04dd7f9c3029149480fcbd4e76429fdb}
+Write stuff to our log in case logging is enabled usage is the same as printf(const char$\ast$, ...); 
+
+\subsection{Variable Documentation}
+\hypertarget{log_8c_a539bec706ac5acbbdef66f363a7a2524}{\index{log.\-c@{log.\-c}!logfile@{logfile}}
+\index{logfile@{logfile}!log.c@{log.\-c}}
+\subsubsection[{logfile}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ logfile = N\-U\-L\-L}}\label{log_8c_a539bec706ac5acbbdef66f363a7a2524}

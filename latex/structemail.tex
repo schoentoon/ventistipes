@@ -5,15 +5,6 @@
 
 {\ttfamily \#include $<$email.\-h$>$}
 
-\subsection*{Public Types}
-\begin{DoxyCompactItemize}
-\item 
-enum \hyperlink{structemail_a9e4fa62032564c26fdeb41bb498463d0}{email\-\_\-fillin\-\_\-mode} \{ \hyperlink{structemail_a9e4fa62032564c26fdeb41bb498463d0ae6c03609bb4f17e56e18c21a49558001}{H\-E\-A\-D\-E\-R\-S} = 0, 
-\hyperlink{structemail_a9e4fa62032564c26fdeb41bb498463d0a7280e9a6ff66dd0dfc8858a015f6a3e9}{D\-A\-T\-A\-\_\-\-H\-E\-A\-D\-E\-R\-S} = 1, 
-\hyperlink{structemail_a9e4fa62032564c26fdeb41bb498463d0a9d7d6f31868d66330397c967c4afd2d2}{D\-A\-T\-A} = 2, 
-\hyperlink{structemail_a9e4fa62032564c26fdeb41bb498463d0aeba86cbe2ebe6c838145a449c14bce86}{D\-A\-T\-A\-\_\-\-D\-O\-N\-E} = 3
- \}
-\end{DoxyCompactItemize}
 \subsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
@@ -29,27 +20,8 @@ char $\ast$ \hyperlink{structemail_a91a70b77df95bd8b0830b49a094c2acb}{data}
 \item 
 struct bufferevent $\ast$ \hyperlink{structemail_a7a6bf7d3dd8ad7622482a90042e470ef}{bev}
 \item 
-enum \hyperlink{structemail_a9e4fa62032564c26fdeb41bb498463d0}{email\-::email\-\_\-fillin\-\_\-mode} \hyperlink{structemail_aa0332a154778fc4836577a47d37674ae}{mode}
+char \hyperlink{structemail_a000e34997df38c2005a83d63e67d9282}{mode}
 \end{DoxyCompactItemize}
-
-
-\subsection{Member Enumeration Documentation}
-\hypertarget{structemail_a9e4fa62032564c26fdeb41bb498463d0}{\index{email@{email}!email\-\_\-fillin\-\_\-mode@{email\-\_\-fillin\-\_\-mode}}
-\index{email\-\_\-fillin\-\_\-mode@{email\-\_\-fillin\-\_\-mode}!email@{email}}
-\subsubsection[{email\-\_\-fillin\-\_\-mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf email\-\_\-fillin\-\_\-mode}}}\label{structemail_a9e4fa62032564c26fdeb41bb498463d0}
-\begin{Desc}
-\item[Enumerator]\par
-\begin{description}
-\index{H\-E\-A\-D\-E\-R\-S@{H\-E\-A\-D\-E\-R\-S}!email@{email}}\index{email@{email}!H\-E\-A\-D\-E\-R\-S@{H\-E\-A\-D\-E\-R\-S}}\item[{\em 
-\hypertarget{structemail_a9e4fa62032564c26fdeb41bb498463d0ae6c03609bb4f17e56e18c21a49558001}{H\-E\-A\-D\-E\-R\-S}\label{structemail_a9e4fa62032564c26fdeb41bb498463d0ae6c03609bb4f17e56e18c21a49558001}
-}]\index{D\-A\-T\-A\-\_\-\-H\-E\-A\-D\-E\-R\-S@{D\-A\-T\-A\-\_\-\-H\-E\-A\-D\-E\-R\-S}!email@{email}}\index{email@{email}!D\-A\-T\-A\-\_\-\-H\-E\-A\-D\-E\-R\-S@{D\-A\-T\-A\-\_\-\-H\-E\-A\-D\-E\-R\-S}}\item[{\em 
-\hypertarget{structemail_a9e4fa62032564c26fdeb41bb498463d0a7280e9a6ff66dd0dfc8858a015f6a3e9}{D\-A\-T\-A\-\_\-\-H\-E\-A\-D\-E\-R\-S}\label{structemail_a9e4fa62032564c26fdeb41bb498463d0a7280e9a6ff66dd0dfc8858a015f6a3e9}
-}]\index{D\-A\-T\-A@{D\-A\-T\-A}!email@{email}}\index{email@{email}!D\-A\-T\-A@{D\-A\-T\-A}}\item[{\em 
-\hypertarget{structemail_a9e4fa62032564c26fdeb41bb498463d0a9d7d6f31868d66330397c967c4afd2d2}{D\-A\-T\-A}\label{structemail_a9e4fa62032564c26fdeb41bb498463d0a9d7d6f31868d66330397c967c4afd2d2}
-}]\index{D\-A\-T\-A\-\_\-\-D\-O\-N\-E@{D\-A\-T\-A\-\_\-\-D\-O\-N\-E}!email@{email}}\index{email@{email}!D\-A\-T\-A\-\_\-\-D\-O\-N\-E@{D\-A\-T\-A\-\_\-\-D\-O\-N\-E}}\item[{\em 
-\hypertarget{structemail_a9e4fa62032564c26fdeb41bb498463d0aeba86cbe2ebe6c838145a449c14bce86}{D\-A\-T\-A\-\_\-\-D\-O\-N\-E}\label{structemail_a9e4fa62032564c26fdeb41bb498463d0aeba86cbe2ebe6c838145a449c14bce86}
-}]\end{description}
-\end{Desc}
 
 
 \subsection{Field Documentation}
@@ -65,9 +37,9 @@ enum \hyperlink{structemail_a9e4fa62032564c26fdeb41bb498463d0}{email\-::email\-\
 \hypertarget{structemail_a765533dfc643627999c751f7e1514664}{\index{email@{email}!from@{from}}
 \index{from@{from}!email@{email}}
 \subsubsection[{from}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ from}}\label{structemail_a765533dfc643627999c751f7e1514664}
-\hypertarget{structemail_aa0332a154778fc4836577a47d37674ae}{\index{email@{email}!mode@{mode}}
+\hypertarget{structemail_a000e34997df38c2005a83d63e67d9282}{\index{email@{email}!mode@{mode}}
 \index{mode@{mode}!email@{email}}
-\subsubsection[{mode}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf email\-::email\-\_\-fillin\-\_\-mode}  mode}}\label{structemail_aa0332a154778fc4836577a47d37674ae}
+\subsubsection[{mode}]{\setlength{\rightskip}{0pt plus 5cm}char mode}}\label{structemail_a000e34997df38c2005a83d63e67d9282}
 \hypertarget{structemail_ae31ac864419a577c2982907c23b426d3}{\index{email@{email}!subject@{subject}}
 \index{subject@{subject}!email@{email}}
 \subsubsection[{subject}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ subject}}\label{structemail_ae31ac864419a577c2982907c23b426d3}

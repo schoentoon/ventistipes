@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -92,8 +92,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="smtp_8h_source.html">smtp.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="log_8h_source.html">log.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="email_8h_source.html">email.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="macros_8h_source.html">macros.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="safefree_8h_source.html">safefree.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="push_8h_source.html">push/push.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="string__helpers_8h_source.html">string_helpers.h</a>&quot;</code><br/>
@@ -110,7 +110,7 @@ Include dependency graph for smtp.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="smtp_8c__incl.png" border="0" usemap="#src_2smtp_8c" alt=""/></div>
 <map name="src_2smtp_8c" id="src_2smtp_8c">
-<area shape="rect" id="node3" href="smtp_8h.html" title="smtp.h" alt="" coords="6,80,68,107"/><area shape="rect" id="node7" href="email_8h.html" title="email.h" alt="" coords="267,155,331,181"/><area shape="rect" id="node9" href="macros_8h.html" title="macros.h" alt="" coords="93,80,168,107"/><area shape="rect" id="node13" href="safefree_8h.html" title="safefree.h" alt="" coords="295,80,375,107"/><area shape="rect" id="node15" href="push_8h.html" title="push/push.h" alt="" coords="399,80,492,107"/><area shape="rect" id="node20" href="string__helpers_8h.html" title="string_helpers.h" alt="" coords="516,80,631,107"/><area shape="rect" id="node35" href="postgres_8h.html" title="postgres.h" alt="" coords="1244,80,1327,107"/><area shape="rect" id="node37" href="dbinfo_8h.html" title="config/dbinfo.h" alt="" coords="1347,155,1453,181"/></map>
+<area shape="rect" id="node3" href="smtp_8h.html" title="smtp.h" alt="" coords="6,80,68,107"/><area shape="rect" id="node7" href="log_8h.html" title="log.h" alt="" coords="93,80,144,107"/><area shape="rect" id="node9" href="email_8h.html" title="email.h" alt="" coords="191,155,255,181"/><area shape="rect" id="node11" href="safefree_8h.html" title="safefree.h" alt="" coords="219,80,299,107"/><area shape="rect" id="node13" href="push_8h.html" title="push/push.h" alt="" coords="323,80,416,107"/><area shape="rect" id="node18" href="string__helpers_8h.html" title="string_helpers.h" alt="" coords="440,80,555,107"/><area shape="rect" id="node34" href="postgres_8h.html" title="postgres.h" alt="" coords="1251,80,1333,107"/><area shape="rect" id="node36" href="dbinfo_8h.html" title="config/dbinfo.h" alt="" coords="1107,155,1213,181"/></map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -126,8 +126,8 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a11d628714b4cd9cf45c5726d1093410e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="smtp_8c.html#a11d628714b4cd9cf45c5726d1093410e">initMailListener</a> (struct event_base *event_base)</td></tr>
-<tr class="separator:a11d628714b4cd9cf45c5726d1093410e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cda0186363c8fc3eb7e82796b0159b5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="smtp_8c.html#a2cda0186363c8fc3eb7e82796b0159b5">initMailListener</a> (struct <a class="el" href="main_8c.html#ac1c1d71aa37cb71608f4f802bb85b200">event_base</a> *<a class="el" href="main_8c.html#ac1c1d71aa37cb71608f4f802bb85b200">event_base</a>, unsigned short listen_port)</td></tr>
+<tr class="separator:a2cda0186363c8fc3eb7e82796b0159b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a834543fbece476c2fed45df76822c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="smtp_8c.html#a7a834543fbece476c2fed45df76822c0">closeMailListener</a> ()</td></tr>
 <tr class="separator:a7a834543fbece476c2fed45df76822c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab63f83e9df29bdad3881cb2c3aa03724"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="smtp_8c.html#ab63f83e9df29bdad3881cb2c3aa03724">create_check_email_from_query</a> (char *<a class="el" href="structemail.html">email</a>)</td></tr>
@@ -204,6 +204,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Close the smtp listener </p>
 
 </div>
 </div>
@@ -239,19 +240,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a11d628714b4cd9cf45c5726d1093410e"></a>
+<a class="anchor" id="a2cda0186363c8fc3eb7e82796b0159b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int initMailListener </td>
           <td>(</td>
-          <td class="paramtype">struct event_base *&#160;</td>
-          <td class="paramname"><em>event_base</em></td><td>)</td>
+          <td class="paramtype">struct <a class="el" href="main_8c.html#ac1c1d71aa37cb71608f4f802bb85b200">event_base</a> *&#160;</td>
+          <td class="paramname"><em>event_base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">unsigned short&#160;</td>
+          <td class="paramname"><em>listen_port</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Init the smtp listener </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event_base</td><td>event_base to use to listen on </td></tr>
+    <tr><td class="paramname">listen_port</td><td>port to listen on </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 in case we're actually listening </dd></dl>
 
 </div>
 </div>
@@ -287,7 +307,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 14 2013 09:33:27 for Ventistipes by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 19 2013 15:13:37 for Ventistipes by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
