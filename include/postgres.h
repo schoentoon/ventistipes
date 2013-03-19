@@ -31,8 +31,17 @@
 
 #include <libpq-fe.h>
 
+/** Initialize our database pool
+ * @param base The event_base used for our internal timer
+ */
 void initDatabasePool(struct event_base* base);
 
+/** Execute a query on our database pool
+ * @param query The query to execute
+ * @param callback The function to call after our query is done
+ * @param context A pointer to pass to your callback
+ * @return 1 in case the query was valid and put onto our database pool
+ */
 int databaseQuery(char* query, void (*callback)(PGresult*,void*,char*), void* context);
 
 #endif //_POSTGRES_H

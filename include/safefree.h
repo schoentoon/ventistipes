@@ -20,6 +20,11 @@
 
 #define SAFEFREE(p) safefree((void**)&p)
 
+/** A somewhat safe implementation of free,
+ * this will set the original passed pointer
+ * to NULL afterwards. Use the macro SAFEFREE
+ * so the compiler will shut up about warnings.
+ */
 void safefree(void **pp);
 
 #endif //_SAFE_FREE_H

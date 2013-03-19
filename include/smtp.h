@@ -20,8 +20,15 @@
 
 #include <event.h>
 
+/** Init the smtp listener
+ * @param event_base event_base to use to listen on
+ * @param listen_port port to listen on
+ * @return 1 in case we're actually listening
+ */
 int initMailListener(struct event_base* event_base, unsigned short listen_port);
 
+/** Close the smtp listener
+ */
 void closeMailListener();
 
 #endif //_SMTP_H

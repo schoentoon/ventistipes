@@ -18,13 +18,21 @@
 #ifndef _LOG_H
 #define _LOG_H
 
+/** Print to stderr and write to log
+ */
 #define ERROR(...) \
         write_to_log(__VA_ARGS__); \
         fprintf(stderr, __VA_ARGS__); \
         fprintf(stderr, "\n");
 
+/** Write stuff to our log in case logging is enabled
+ * usage is the same as printf(const char*, ...);
+ */
 void write_to_log(const char* format, ...);
 
+/** Configure the log file
+ * @param filename Write a log to this file, file will be created if it doesn't exist.
+ */
 void set_logfile(char* filename);
 
 #endif //_LOG_H
