@@ -159,32 +159,34 @@ int email_append_data(struct email* email, char* data)
 
 void print_emails(struct email* email)
 {
-  printf("From: %s\n", (email->from ? email->from : "nobody."));
-  printf("To: ");
+  if (!email || (!email->from && !email->to[0] && !email->subject && !email->data))
+    return; /* Don't print the all NULL emails.. */
+  fprintf(stderr, "From: %s\n", (email->from ? email->from : "nobody."));
+  fprintf(stderr, "To: ");
   if (!email->to[0])
-    printf("nobody.\n");
+    fprintf(stderr, "nobody.\n");
   else {
     int i;
     for (i = 0; i < MAX_RECIPIENTS; i++) {
       if (email->to[i]) {
         if (i == 0)
-          printf("%s", email->to[i]);
+          fprintf(stderr, "%s", email->to[i]);
         else
-          printf(", %s", email->to[i]);
+          fprintf(stderr, ", %s", email->to[i]);
       } else
         break;
     }
-    printf("\n");
+    fprintf(stderr, "\n");
   }
-  printf("Subject: ");
+  fprintf(stderr, "Subject: ");
   if (email->subject)
-    printf("%s\n", email->subject);
+    fprintf(stderr, "%s\n", email->subject);
   else
-    printf("No subject\n");
-  printf("Data: ");
+    fprintf(stderr, "No subject\n");
+  fprintf(stderr, "Data: ");
   if (email->data)
-    printf("%s\n", email->data);
+    fprintf(stderr, "%s\n", email->data);
   else
-    printf("NULL\n");
+    fprintf(stderr, "NULL\n");
 }
 #endif
