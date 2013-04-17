@@ -71,7 +71,7 @@ void android_push(struct push_info* push_info, char* push_id, struct event_base*
                                                           ,BUFFEREVENT_SSL_CONNECTING, BEV_OPT_CLOSE_ON_FREE);
   bufferevent_setcb(bev, android_readcb, NULL, android_eventcb, NULL);
   bufferevent_socket_connect_hostname(bev, dns, AF_INET, "android.googleapis.com", 443);
-  bufferevent_enable(bev, EV_READ|EV_WRITE);
+  bufferevent_enable(bev, EV_READ);
   bufferevent_write(bev, _POST, strlen(_POST));
   bufferevent_write(bev, _HOST, strlen(_HOST));
   bufferevent_write(bev, _USER_AGENT, strlen(_USER_AGENT));

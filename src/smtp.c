@@ -194,7 +194,7 @@ static void smtp_listener_cb(struct evconnlistener *listener, evutil_socket_t fd
   struct email* email = new_email();
   email->bev = bev;
   bufferevent_setcb(bev, smtp_conn_readcb, NULL, smtp_conn_eventcb, email);
-  bufferevent_enable(bev, EV_WRITE|EV_READ);
+  bufferevent_enable(bev, EV_READ);
   bufferevent_write(bev, _220_HELLO, strlen(_220_HELLO));
 }
 
@@ -211,7 +211,7 @@ static void check_email_from_callback(PGresult* res, void* context, char* query)
   if (PQntuples(res) == 1) {
     size_t len = strlen(query);
     size_t email_len = len - FROM_QUERY_START - FROM_QUERY_END;
-    char*  addr = malloc(email_len);
+    char* addr = malloc(email_len);
     int i;
     for (i = 0; i <= email_len; i++)
       addr[i] = query[i + FROM_QUERY_START];
