@@ -169,10 +169,6 @@ static void smtp_conn_readcb(struct bufferevent *bev, void* args)
 
 static void smtp_conn_eventcb(struct bufferevent *bev, short events, void* args)
 {
-#ifdef DEV
-  if (events & BEV_EVENT_EOF)
-    printf("Connection closed.\n");
-#endif
   bufferevent_free(bev);
   struct email* email = (struct email*) args;
 #ifdef DEV
