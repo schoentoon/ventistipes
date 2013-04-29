@@ -22,6 +22,7 @@
 
 #include <limits.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct query_struct {
   void (*callback)(PGresult*,void*,char*);
@@ -95,6 +96,7 @@ static void pq_timer(evutil_socket_t fd, short event, void *arg)
           databasePool[i]->query_count--;
           struct query_struct* old = databasePool[i]->queries;
           databasePool[i]->queries = databasePool[i]->queries->next;
+          free(old->query);
           free(old);
         }
       }
@@ -118,7 +120,7 @@ void appendQueryPool(struct connection_struct* conn, struct query_struct* query)
     conn->query_count++;
   } else {
     struct query_struct* node = conn->queries;
-    while (node)
+    while (node->next)
       node = node->next;
     node->next = query;
     conn->query_count++;
@@ -130,7 +132,10 @@ int databaseQuery(char* query, void (*callback)(PGresult*,void*,char*), void* co
   if (query == NULL)
     return 0;
   struct query_struct* query_struct = malloc(sizeof(struct query_struct));
-  query_struct->query = query;
+  if (query_struct == NULL)
+    return 0;
+  query_struct->query = malloc(strlen(query) + 1);
+  strcpy(query_struct->query, query);
   query_struct->callback = callback;
   query_struct->context = context;
   query_struct->sent = 0;
