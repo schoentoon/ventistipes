@@ -134,8 +134,7 @@ int databaseQuery(char* query, void (*callback)(PGresult*,void*,char*), void* co
   struct query_struct* query_struct = malloc(sizeof(struct query_struct));
   if (query_struct == NULL)
     return 0;
-  query_struct->query = malloc(strlen(query) + 1);
-  strcpy(query_struct->query, query);
+  query_struct->query = strdup(query);
   query_struct->callback = callback;
   query_struct->context = context;
   query_struct->sent = 0;
