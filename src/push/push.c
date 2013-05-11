@@ -88,5 +88,4 @@ static void push_query_result(PGresult* res, void* context, char* query)
   SAFEFREE(push_info->data);
   SAFEFREE(push_info->sender);
   SAFEFREE(push_info);
-  SAFEFREE(query);
 }

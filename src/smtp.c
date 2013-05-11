@@ -220,7 +220,6 @@ static void check_email_from_callback(PGresult* res, void* context, char* query)
     }
   } else
     bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
-  SAFEFREE(query);
 }
 
 #define TO_QUERY_START 38
@@ -249,7 +248,6 @@ static void check_email_to_callback(PGresult* res, void* context, char* query)
     }
   } else
     bufferevent_write(bev, _550_NOT_ALLOWED, strlen(_550_NOT_ALLOWED));
-  SAFEFREE(query);
 }
 
 char* create_check_email_from_query(char* email)
