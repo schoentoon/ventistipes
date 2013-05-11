@@ -86,17 +86,18 @@ static void pq_timer(evutil_socket_t fd, short event, void *arg)
           databasePool[i]->queries->sent = 1;
         }
         if (databasePool[i]->conn && PQconsumeInput(databasePool[i]->conn) && !PQisBusy(databasePool[i]->conn)) {
+          struct query_struct* old = databasePool[i]->queries;
           PGresult* res = PQgetResult(databasePool[i]->conn);
           while (res) {
-            if (databasePool[i]->queries->callback)
-              databasePool[i]->queries->callback(res, databasePool[i]->queries->context, databasePool[i]->queries->query);
+            if (old->callback)
+              old->callback(res, old->context, old->query);
             PQclear(res);
             res = PQgetResult(databasePool[i]->conn);
           }
           databasePool[i]->query_count--;
-          struct query_struct* old = databasePool[i]->queries;
           databasePool[i]->queries = databasePool[i]->queries->next;
-          free(old->query);
+          if (old->query)
+            free(old->query);
           free(old);
         }
       }
